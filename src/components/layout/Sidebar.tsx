@@ -61,84 +61,72 @@ export const Sidebar: React.FC = () => {
     { code: 'hi', label: 'Hindi', native: 'हिन्दी' },
   ];
 
+  const renderNavGroup = (title: string, items: (typeof mainNav)[number][]) => (
+    <div>
+      <h4 className="label-eyebrow mb-3">{title}</h4>
+      <ul className="space-y-0.5">
+        {items.map(item => {
+          const isActive = currentView === item.id;
+          return (
+            <li key={item.id}>
+              <button
+                onClick={() => navigateTo(item.id)}
+                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm transition-colors cursor-pointer ${
+                  isActive
+                    ? 'bg-cta text-ctafg font-medium'
+                    : 'text-tint hover:bg-raise hover:text-ink'
+                }`}
+              >
+                <span>{item.label}</span>
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
       {/* Backdrop */}
       <div
         onClick={() => setIsSidebarOpen(false)}
-        className="absolute inset-0 bg-stone-900/60 dark:bg-black/75 backdrop-blur-sm transition-opacity"
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm anim-fade"
       />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-        <aside className="w-screen max-w-md bg-[#FAF8F5] dark:bg-[#0E0E0E] text-stone-900 dark:text-stone-100 border-l border-stone-200 dark:border-stone-800 shadow-2xl flex flex-col justify-between p-6 sm:p-8 overflow-y-auto">
+      <div className="fixed inset-y-0 right-0 flex max-w-full pl-10">
+        <aside className="flex w-screen max-w-md flex-col justify-between overflow-y-auto border-l border-line bg-tray text-ink shadow-2xl anim-slide-in">
           {/* Header */}
-          <div>
-            <div className="flex items-center justify-between pb-6 border-b border-stone-200 dark:border-stone-800">
+          <div className="px-7 pt-7">
+            <div className="flex items-center justify-between border-b border-line pb-6">
               <div>
-                <span className="font-editorial text-2xl tracking-widest font-semibold text-stone-900 dark:text-stone-100 uppercase">
-                  ECHO
-                </span>
-                <p className="text-[11px] font-mono tracking-wider text-stone-500 dark:text-stone-400 mt-0.5">
-                  CLIENT WORKSPACE
-                </p>
+                <span className="font-serif text-2xl tracking-wide text-ink">ECHO</span>
+                <p className="label-overline mt-1">Client Workspace</p>
               </div>
-
               <button
                 onClick={() => setIsSidebarOpen(false)}
-                className="p-2 text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100 transition-colors cursor-pointer"
+                className="icon-btn"
                 aria-label="Close sidebar"
               >
-                <X className="w-5 h-5 stroke-[1.5]" />
+                <X className="h-5 w-5" strokeWidth={1.75} />
               </button>
             </div>
 
-            {/* Client Context Banner */}
-            <div className="py-4 border-b border-stone-200/80 dark:border-stone-800/80 mb-6">
-              <div className="text-xs font-mono uppercase tracking-widest text-stone-500 dark:text-stone-400">
-                Logged In Account
-              </div>
-              <div className="text-sm font-medium text-stone-900 dark:text-stone-100 mt-1">
-                {client.companyName}
-              </div>
-              <div className="text-xs text-stone-500 dark:text-stone-400 font-mono mt-0.5">
-                Client ID: {client.client_id}
-              </div>
+            {/* Client context */}
+            <div className="border-b border-line py-5">
+              <div className="label-overline">Logged In Account</div>
+              <div className="mt-1 text-sm font-medium text-ink">{client.companyName}</div>
+              <div className="mt-0.5 font-mono-numbers text-xs text-faint">Client ID: {client.client_id}</div>
             </div>
 
-            {/* Navigation Groups */}
-            <div className="space-y-7">
-              {/* Group 1: Main */}
-              <div>
-                <h4 className="text-[11px] font-mono uppercase tracking-widest text-stone-600 dark:text-stone-400 mb-3">
-                  Main
-                </h4>
-                <ul className="space-y-1">
-                  {mainNav.map(item => {
-                    const isActive = currentView === item.id;
-                    return (
-                      <li key={item.id}>
-                        <button
-                          onClick={() => navigateTo(item.id)}
-                          className={`w-full text-left py-2 px-3 text-sm transition-all flex items-center justify-between cursor-pointer ${
-                            isActive
-                              ? 'bg-stone-900 text-stone-50 dark:bg-stone-100 dark:text-stone-950 font-medium'
-                              : 'text-stone-700 dark:text-stone-300 hover:bg-stone-200/60 dark:hover:bg-stone-800/60'
-                          }`}
-                        >
-                          <span className="tracking-wide">{item.label}</span>
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
+            {/* Navigation */}
+            <div className="space-y-7 py-6">
+              {renderNavGroup('Main', mainNav)}
 
-              {/* Group 2: Communication */}
+              {/* Communication */}
               <div>
-                <h4 className="text-[11px] font-mono uppercase tracking-widest text-stone-600 dark:text-stone-400 mb-3">
-                  Communication
-                </h4>
-                <ul className="space-y-1">
+                <h4 className="label-eyebrow mb-3">Communication</h4>
+                <ul className="space-y-0.5">
                   {commNav.map((item, idx) => {
                     const isActive = currentView === item.id && !item.isNotifAction;
                     return (
@@ -147,24 +135,25 @@ export const Sidebar: React.FC = () => {
                           onClick={() => {
                             if (item.isNotifAction) {
                               setIsSidebarOpen(false);
-                              // Trigger notification opening
                               setTimeout(() => {
-                                const notifBtn = document.querySelector('[title="Notifications"]') as HTMLButtonElement;
+                                const notifBtn = document.querySelector(
+                                  '[title="Notifications"]'
+                                ) as HTMLButtonElement;
                                 notifBtn?.click();
                               }, 100);
                             } else {
                               navigateTo(item.id);
                             }
                           }}
-                          className={`w-full text-left py-2 px-3 text-sm transition-all flex items-center justify-between cursor-pointer ${
+                          className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm transition-colors cursor-pointer ${
                             isActive
-                              ? 'bg-stone-900 text-stone-50 dark:bg-stone-100 dark:text-stone-950 font-medium'
-                              : 'text-stone-700 dark:text-stone-300 hover:bg-stone-200/60 dark:hover:bg-stone-800/60'
+                              ? 'bg-cta text-ctafg font-medium'
+                              : 'text-tint hover:bg-raise hover:text-ink'
                           }`}
                         >
-                          <span className="tracking-wide">{item.label}</span>
+                          <span>{item.label}</span>
                           {item.badge !== undefined && item.badge > 0 && (
-                            <span className="text-xs font-mono px-1.5 py-0.5 bg-red-600 text-white rounded-none">
+                            <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-accent px-1.5 font-mono-numbers text-[10px] font-semibold text-white">
                               {item.badge}
                             </span>
                           )}
@@ -175,101 +164,73 @@ export const Sidebar: React.FC = () => {
                 </ul>
               </div>
 
-              {/* Group 3: Documents & Payments */}
-              <div>
-                <h4 className="text-[11px] font-mono uppercase tracking-widest text-stone-600 dark:text-stone-400 mb-3">
-                  Documents & Payments
-                </h4>
-                <ul className="space-y-1">
-                  {docsNav.map(item => {
-                    const isActive = currentView === item.id;
-                    return (
-                      <li key={item.id}>
-                        <button
-                          onClick={() => navigateTo(item.id)}
-                          className={`w-full text-left py-2 px-3 text-sm transition-all flex items-center justify-between cursor-pointer ${
-                            isActive
-                              ? 'bg-stone-900 text-stone-50 dark:bg-stone-100 dark:text-stone-950 font-medium'
-                              : 'text-stone-700 dark:text-stone-300 hover:bg-stone-200/60 dark:hover:bg-stone-800/60'
-                          }`}
-                        >
-                          <span className="tracking-wide">{item.label}</span>
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
+              {renderNavGroup('Documents & Payments', docsNav)}
 
-              {/* Group 4: Account */}
+              {/* Account */}
               <div>
-                <h4 className="text-[11px] font-mono uppercase tracking-widest text-stone-600 dark:text-stone-400 mb-3">
-                  Account
-                </h4>
-                <ul className="space-y-1">
+                <h4 className="label-eyebrow mb-3">Account</h4>
+                <ul className="space-y-0.5">
                   <li>
                     <button
                       onClick={() => navigateTo('profile')}
-                      className={`w-full text-left py-2 px-3 text-sm transition-all flex items-center justify-between cursor-pointer ${
+                      className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm transition-colors cursor-pointer ${
                         currentView === 'profile'
-                          ? 'bg-stone-900 text-stone-50 dark:bg-stone-100 dark:text-stone-950 font-medium'
-                          : 'text-stone-700 dark:text-stone-300 hover:bg-stone-200/60 dark:hover:bg-stone-800/60'
+                          ? 'bg-cta text-ctafg font-medium'
+                          : 'text-tint hover:bg-raise hover:text-ink'
                       }`}
                     >
-                      <span className="tracking-wide">Profile Settings</span>
+                      <span>Profile Settings</span>
                     </button>
                   </li>
                   <li>
                     <button
                       onClick={() => navigateTo('help')}
-                      className={`w-full text-left py-2 px-3 text-sm transition-all flex items-center justify-between cursor-pointer ${
+                      className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm transition-colors cursor-pointer ${
                         currentView === 'help'
-                          ? 'bg-stone-900 text-stone-50 dark:bg-stone-100 dark:text-stone-950 font-medium'
-                          : 'text-stone-700 dark:text-stone-300 hover:bg-stone-200/60 dark:hover:bg-stone-800/60'
+                          ? 'bg-cta text-ctafg font-medium'
+                          : 'text-tint hover:bg-raise hover:text-ink'
                       }`}
                     >
-                      <span className="tracking-wide">Help</span>
+                      <span>Help</span>
                     </button>
                   </li>
                 </ul>
+              </div>
 
-                {/* Language Selector */}
-                <div className="mt-4 px-3 pt-3 border-t border-stone-200/60 dark:border-stone-800/60">
-                  <div className="text-[11px] font-mono tracking-widest uppercase text-stone-600 dark:text-stone-400 mb-2">
-                    Portal Language
-                  </div>
-                  <div className="flex items-center gap-1.5 bg-stone-200/70 dark:bg-stone-800/70 p-1">
-                    {languages.map(lang => (
-                      <button
-                        key={lang.code}
-                        onClick={() => setLanguage(lang.code)}
-                        className={`flex-1 text-center py-1 text-xs font-mono transition-colors flex items-center justify-center gap-1 cursor-pointer ${
-                          language === lang.code
-                            ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 font-semibold'
-                            : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-200'
-                        }`}
-                      >
-                        {language === lang.code && <Check className="w-2.5 h-2.5" />}
-                        <span>{lang.native}</span>
-                      </button>
-                    ))}
-                  </div>
+              {/* Language selector */}
+              <div className="px-3 pt-3">
+                <div className="label-eyebrow mb-2.5">Portal Language</div>
+                <div className="flex items-center gap-1.5 rounded-full border border-line bg-raise p-1">
+                  {languages.map(lang => (
+                    <button
+                      key={lang.code}
+                      onClick={() => setLanguage(lang.code)}
+                      className={`flex flex-1 items-center justify-center gap-1 rounded-full py-1.5 text-xs font-medium transition-colors cursor-pointer ${
+                        language === lang.code
+                          ? 'bg-cta text-ctafg font-semibold'
+                          : 'text-faint hover:text-ink'
+                      }`}
+                    >
+                      {language === lang.code && <Check className="h-3 w-3" strokeWidth={2.25} />}
+                      <span>{lang.native}</span>
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Footer / Sign Out */}
-          <div className="pt-6 mt-8 border-t border-stone-200 dark:border-stone-800">
+          {/* Footer / Sign out */}
+          <div className="border-t border-line px-7 py-6">
             <button
               onClick={logout}
-              className="w-full flex items-center justify-between py-2.5 px-3 text-sm font-mono tracking-wider uppercase text-stone-600 dark:text-stone-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-500/10 transition-colors cursor-pointer"
+              className="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-sm font-semibold uppercase tracking-wider text-faint transition-colors hover:text-accent cursor-pointer"
             >
               <span>Sign Out</span>
-              <LogOut className="w-4 h-4 stroke-[1.5]" />
+              <LogOut className="h-4 w-4" strokeWidth={1.75} />
             </button>
-            <div className="text-[10px] font-mono text-stone-500 dark:text-stone-400 text-center mt-4">
-              ECHO ECOSYSTEM · CLIENT PORTAL LAYER 3
+            <div className="mt-4 text-center text-[10px] uppercase tracking-widest text-faint/70">
+              ECHO Ecosystem · Client Portal Layer 3
             </div>
           </div>
         </aside>

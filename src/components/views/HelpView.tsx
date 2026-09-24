@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEcho } from '../../context/EchoContext';
 import { BackToHome } from '../common/BackToHome';
-import { HelpCircle, PhoneCall, Mail, Clock, ShieldAlert, ArrowRight } from 'lucide-react';
+import { PhoneCall, Mail, ArrowRight } from 'lucide-react';
 
 export const HelpView: React.FC = () => {
   const { setCurrentView } = useEcho();
@@ -13,81 +13,71 @@ export const HelpView: React.FC = () => {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
       <BackToHome />
 
       {/* Header */}
-      <div className="pb-8 border-b border-stone-200 dark:border-stone-800">
-        <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-stone-500 dark:text-stone-400">
-          Client Operations Support & Protocols
-        </span>
-        <h1 className="font-editorial text-4xl sm:text-5xl font-normal text-stone-900 dark:text-stone-100 tracking-tight mt-1">
-          Help & Operational SLAs
-        </h1>
-        <p className="text-stone-600 dark:text-stone-400 text-sm mt-1 font-mono">
+      <div className="border-b border-line pb-8">
+        <span className="section-kicker">Client Operations Support &amp; Protocols</span>
+        <h1 className="h-serif mt-1">Help &amp; Operational SLAs</h1>
+        <p className="mt-1 text-sm text-tint">
           ECHO tri-layer protocols, response timelines, and emergency dispatch contact channels.
         </p>
       </div>
 
       {/* Tri-Layer Architecture Overview */}
-      <div className="my-8 p-6 border border-stone-200 dark:border-stone-800 bg-white/40 dark:bg-stone-900/20 space-y-4">
-        <h3 className="text-xs font-mono uppercase tracking-widest text-stone-600 dark:text-stone-400">
-          The ECHO Tri-Layer System
-        </h3>
-        <p className="text-sm font-sans text-stone-800 dark:text-stone-200 leading-relaxed">
+      <div className="card-surface my-8 space-y-4 p-6">
+        <h3 className="label-eyebrow">The ECHO Tri-Layer System</h3>
+        <p className="text-sm leading-relaxed text-tint">
           ECHO operates as a synchronized ecosystem designed for precision estate and facility management:
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 text-xs font-mono">
-          <div className="p-4 border border-stone-200 dark:border-stone-800 bg-stone-100/50 dark:bg-stone-950/50">
-            <span className="text-[10px] text-stone-400 uppercase block">Layer 01</span>
-            <strong className="text-stone-900 dark:text-stone-100 block text-sm mt-1">Admin Portal</strong>
-            <span className="text-stone-600 dark:text-stone-400 mt-1 block font-sans">
-              <strong>Manage:</strong> Client records, contract scopes, workforce dispatch, and financial billing.
+        <div className="grid grid-cols-1 gap-4 pt-2 md:grid-cols-3">
+          <div className="rounded-2xl border border-line bg-tray p-4">
+            <span className="font-mono-numbers text-[10px] uppercase text-faint">Layer 01</span>
+            <strong className="mt-1 block text-sm text-ink">Admin Portal</strong>
+            <span className="mt-1 block text-xs leading-relaxed text-tint">
+              <strong className="font-semibold">Manage:</strong> Client records, contract scopes, workforce dispatch, and financial billing.
             </span>
           </div>
 
-          <div className="p-4 border border-stone-200 dark:border-stone-800 bg-stone-100/50 dark:bg-stone-950/50">
-            <span className="text-[10px] text-stone-400 uppercase block">Layer 02</span>
-            <strong className="text-stone-900 dark:text-stone-100 block text-sm mt-1">Employee Portal</strong>
-            <span className="text-stone-600 dark:text-stone-400 mt-1 block font-sans">
-              <strong>Execute:</strong> Field task checklists, GPS attendance, and live before/after evidence capture.
+          <div className="rounded-2xl border border-line bg-tray p-4">
+            <span className="font-mono-numbers text-[10px] uppercase text-faint">Layer 02</span>
+            <strong className="mt-1 block text-sm text-ink">Employee Portal</strong>
+            <span className="mt-1 block text-xs leading-relaxed text-tint">
+              <strong className="font-semibold">Execute:</strong> Field task checklists, GPS attendance, and live before/after evidence capture.
             </span>
           </div>
 
-          <div className="p-4 border border-stone-900 dark:border-stone-100 bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-950">
-            <span className="text-[10px] opacity-75 uppercase block">Layer 03 (Current)</span>
-            <strong className="block text-sm mt-1">Client Portal</strong>
-            <span className="opacity-90 mt-1 block font-sans">
-              <strong>Request & Review:</strong> Raise activities, monitor live status, inspect evidence, and settle invoices.
+          <div className="rounded-2xl bg-cta p-4 text-ctafg">
+            <span className="font-mono-numbers text-[10px] uppercase opacity-70">Layer 03 (Current)</span>
+            <strong className="mt-1 block text-sm">Client Portal</strong>
+            <span className="mt-1 block text-xs leading-relaxed opacity-90">
+              <strong className="font-semibold">Request &amp; Review:</strong> Raise activities, monitor live status, inspect evidence, and settle invoices.
             </span>
           </div>
         </div>
       </div>
 
       {/* SLA Guidelines */}
-      <div className="my-8 border border-stone-200 dark:border-stone-800 bg-white/40 dark:bg-stone-900/20 p-6">
-        <h3 className="text-xs font-mono uppercase tracking-widest text-stone-600 dark:text-stone-400 mb-4 pb-2 border-b border-stone-200 dark:border-stone-800">
+      <div className="card-surface my-8 p-6">
+        <h3 className="label-eyebrow mb-4 border-b border-line pb-2">
           Service Level Agreement (SLA) Matrix
         </h3>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           {slas.map((sla, idx) => (
             <div
               key={idx}
-              className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border border-stone-200 dark:border-stone-800 bg-stone-100/40 dark:bg-stone-950/40 gap-3"
+              className="flex flex-col justify-between gap-3 rounded-2xl border border-line bg-tray px-5 py-4 sm:flex-row sm:items-center"
             >
               <div>
-                <h4 className="text-xs font-mono font-bold text-stone-900 dark:text-stone-100 uppercase tracking-wide">
-                  {sla.priority}
-                </h4>
-                <p className="text-xs text-stone-600 dark:text-stone-400 font-sans mt-0.5">
-                  {sla.description}
-                </p>
+                <h4 className="font-mono-numbers text-xs font-bold uppercase tracking-wide text-ink">{sla.priority}</h4>
+                <p className="mt-0.5 text-xs text-tint">{sla.description}</p>
               </div>
 
-              <div className="text-right shrink-0">
-                <span className="text-xs font-mono font-bold text-stone-900 dark:text-stone-100 px-2 py-1 bg-stone-200 dark:bg-stone-800">
+              <div className="shrink-0">
+                <span className="rounded-full bg-ink px-3 py-1.5 font-mono-numbers text-xs font-bold text-ctafg">
                   {sla.response}
                 </span>
               </div>
@@ -97,39 +87,41 @@ export const HelpView: React.FC = () => {
       </div>
 
       {/* Emergency Dispatch Desk */}
-      <div className="my-8 border border-stone-200 dark:border-stone-800 bg-white/40 dark:bg-stone-900/20 p-6">
-        <h3 className="text-xs font-mono uppercase tracking-widest text-stone-600 dark:text-stone-400 mb-4 pb-2 border-b border-stone-200 dark:border-stone-800">
-          Emergency Operations Desk
-        </h3>
+      <div className="card-surface my-8 p-6">
+        <h3 className="label-eyebrow mb-4 border-b border-line pb-2">Emergency Operations Desk</h3>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs font-mono">
-          <div className="p-4 border border-stone-200 dark:border-stone-800 bg-stone-100/50 dark:bg-stone-950/50">
-            <span className="text-[10px] text-stone-400 uppercase block mb-1">Direct Operations Hotline</span>
-            <div className="flex items-center gap-2 text-stone-900 dark:text-stone-100 font-semibold text-sm">
-              <PhoneCall className="w-4 h-4 text-stone-700 dark:text-stone-300" />
-              <span>+91 (044) 4800 9200</span>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="rounded-2xl border border-line bg-tray p-4">
+            <span className="label-overline mb-1 block">Direct Operations Hotline</span>
+            <div className="flex items-center gap-2 text-sm font-semibold text-ink">
+              <PhoneCall className="h-4 w-4 text-tint" strokeWidth={1.75} />
+              <span className="font-mono-numbers">+91 (044) 4800 9200</span>
             </div>
-            <span className="text-[10px] text-stone-400 mt-1 block">Monitored 24/7 by ECHO Dispatch Duty Officers</span>
+            <span className="font-mono-numbers mt-1 block text-[10px] text-faint">
+              Monitored 24/7 by ECHO Dispatch Duty Officers
+            </span>
           </div>
 
-          <div className="p-4 border border-stone-200 dark:border-stone-800 bg-stone-100/50 dark:bg-stone-950/50">
-            <span className="text-[10px] text-stone-400 uppercase block mb-1">Operations Desk Email</span>
-            <div className="flex items-center gap-2 text-stone-900 dark:text-stone-100 font-semibold text-sm">
-              <Mail className="w-4 h-4 text-stone-700 dark:text-stone-300" />
-              <span>dispatch@echo-ecosystem.com</span>
+          <div className="rounded-2xl border border-line bg-tray p-4">
+            <span className="label-overline mb-1 block">Operations Desk Email</span>
+            <div className="flex items-center gap-2 text-sm font-semibold text-ink">
+              <Mail className="h-4 w-4 text-tint" strokeWidth={1.75} />
+              <span className="font-mono-numbers">dispatch@echo-ecosystem.com</span>
             </div>
-            <span className="text-[10px] text-stone-400 mt-1 block">Automated high-priority queueing</span>
+            <span className="font-mono-numbers mt-1 block text-[10px] text-faint">
+              Automated high-priority queueing
+            </span>
           </div>
         </div>
 
-        <div className="mt-6 pt-4 border-t border-stone-200 dark:border-stone-800 flex justify-between items-center">
-          <span className="text-xs font-mono text-stone-500">Need to report an urgent breakdown?</span>
+        <div className="mt-6 flex items-center justify-between border-t border-line pt-4">
+          <span className="text-xs text-tint">Need to report an urgent breakdown?</span>
           <button
             onClick={() => setCurrentView('raise-new-activity')}
-            className="inline-flex items-center gap-1.5 px-4 py-2 bg-stone-950 text-white dark:bg-stone-100 dark:text-stone-950 text-xs font-mono uppercase tracking-wider cursor-pointer"
+            className="btn-accent inline-flex cursor-pointer items-center gap-1.5 px-4 py-2"
           >
             <span>Raise Activity Ticket</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="h-3.5 w-3.5" strokeWidth={1.75} />
           </button>
         </div>
       </div>

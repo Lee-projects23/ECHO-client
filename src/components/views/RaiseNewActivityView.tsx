@@ -102,18 +102,14 @@ export const RaiseNewActivityView: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
       <BackToHome onClick={() => setCurrentView('raised-activity')} label="Back to Raised Activity" />
 
       {/* Header */}
-      <div className="pb-8 border-b border-stone-200 dark:border-stone-800">
-        <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-stone-500 dark:text-stone-400">
-          Operational Ticket Submission
-        </span>
-        <h1 className="font-editorial text-4xl sm:text-5xl font-normal text-stone-900 dark:text-stone-100 tracking-tight mt-1">
-          Raise New Activity
-        </h1>
-        <p className="text-stone-600 dark:text-stone-400 text-sm mt-1 font-mono">
+      <div className="border-b border-line pb-8">
+        <span className="section-kicker">Operational Ticket Submission</span>
+        <h1 className="h-serif mt-1">Raise New Activity</h1>
+        <p className="mt-1 text-sm text-tint">
           Report an issue or emergency maintenance need. Admin will triage and dispatch field specialists.
         </p>
       </div>
@@ -121,14 +117,12 @@ export const RaiseNewActivityView: React.FC = () => {
       {/* Main Form */}
       <form onSubmit={handleSubmit} className="mt-8 space-y-8">
         {/* Site Selection */}
-        <div className="border border-stone-200 dark:border-stone-800 p-6 bg-white/40 dark:bg-stone-900/20">
-          <label className="block text-xs font-mono uppercase tracking-widest text-stone-600 dark:text-stone-400 mb-2">
-            Site Location *
-          </label>
+        <div className="card-surface p-6">
+          <label className="label-overline mb-2 block">Site Location *</label>
           <select
             value={selectedSiteId}
             onChange={e => setSelectedSiteId(e.target.value)}
-            className="w-full bg-stone-50 dark:bg-stone-950 border border-stone-300 dark:border-stone-700 px-3.5 py-2.5 text-sm font-mono text-stone-900 dark:text-stone-100 focus:outline-none focus:border-stone-900 dark:focus:border-stone-100"
+            className="input-field"
           >
             {client.registeredSites.map(site => (
               <option key={site.site_id} value={site.site_id}>
@@ -139,109 +133,92 @@ export const RaiseNewActivityView: React.FC = () => {
           </select>
 
           {selectedSiteId === 'custom' && (
-            <div className="mt-3">
+            <div className="mt-3 anim-fade">
               <input
                 type="text"
                 value={customSiteName}
                 onChange={e => setCustomSiteName(e.target.value)}
                 placeholder="Specify estate / facility name & landmark address"
                 required
-                className="w-full bg-stone-50 dark:bg-stone-950 border border-stone-300 dark:border-stone-700 px-3.5 py-2 text-xs font-mono text-stone-900 dark:text-stone-100 focus:outline-none focus:border-stone-900 dark:focus:border-stone-100"
+                className="input-field"
               />
             </div>
           )}
         </div>
 
         {/* Problem Title & Detailed Narrative */}
-        <div className="border border-stone-200 dark:border-stone-800 p-6 bg-white/40 dark:bg-stone-900/20 space-y-5">
+        <div className="card-surface space-y-5 p-6">
           <div>
-            <label className="block text-xs font-mono uppercase tracking-widest text-stone-600 dark:text-stone-400 mb-2">
-              Problem Summary *
-            </label>
+            <label className="label-overline mb-2 block">Problem Summary *</label>
             <input
               type="text"
               value={problem}
               onChange={e => setProblem(e.target.value)}
               required
               placeholder="e.g. Pump malfunction, Irrigation pressure drop, Lighting short"
-              className="w-full bg-stone-50 dark:bg-stone-950 border border-stone-300 dark:border-stone-700 px-3.5 py-2.5 text-sm font-sans text-stone-900 dark:text-stone-100 focus:outline-none focus:border-stone-900 dark:focus:border-stone-100"
+              className="input-field"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-mono uppercase tracking-widest text-stone-600 dark:text-stone-400 mb-2">
-              Describe the Problem *
-            </label>
+            <label className="label-overline mb-2 block">Describe the Problem *</label>
             <textarea
               rows={4}
               value={description}
               onChange={e => setDescription(e.target.value)}
               required
               placeholder="Provide specific observations: exact location on site, when it started, water leaks, unusual noises or power trips..."
-              className="w-full bg-stone-50 dark:bg-stone-950 border border-stone-300 dark:border-stone-700 px-3.5 py-2.5 text-sm font-sans text-stone-900 dark:text-stone-100 focus:outline-none focus:border-stone-900 dark:focus:border-stone-100"
+              className="input-field resize-none"
             />
           </div>
         </div>
 
         {/* Photos & Mock Camera Section */}
-        <div className="border border-stone-200 dark:border-stone-800 p-6 bg-white/40 dark:bg-stone-900/20">
-          <div className="flex items-center justify-between mb-4">
+        <div className="card-surface p-6">
+          <div className="mb-4 flex items-center justify-between">
             <div>
-              <h3 className="text-xs font-mono uppercase tracking-widest text-stone-600 dark:text-stone-400">
-                Photographic Evidence
-              </h3>
-              <p className="text-xs text-stone-500 font-sans mt-0.5">
+              <h3 className="label-eyebrow">Photographic Evidence</h3>
+              <p className="mt-0.5 text-xs text-faint">
                 Upload or capture clear photos of the issue for immediate remote diagnosis.
               </p>
             </div>
-            <span className="text-xs font-mono text-stone-400">{photos.length}/4 photos</span>
+            <span className="font-mono-numbers text-xs text-faint">{photos.length}/4 photos</span>
           </div>
 
           {/* Action triggers */}
-          <div className="flex flex-wrap items-center gap-3 mb-6">
-            <button
-              type="button"
-              onClick={handleAddMockPhoto}
-              disabled={photos.length >= 4}
-              className="inline-flex items-center gap-2 px-3.5 py-2 border border-stone-300 dark:border-stone-700 hover:border-stone-900 dark:hover:border-stone-100 text-xs font-mono uppercase tracking-wider text-stone-800 dark:text-stone-200 transition-colors cursor-pointer disabled:opacity-40"
-            >
-              <Camera className="w-4 h-4" />
+          <div className="mb-6 flex flex-wrap items-center gap-3">
+            <button type="button" onClick={handleAddMockPhoto} disabled={photos.length >= 4} className="btn-secondary">
+              <Camera className="h-4 w-4" strokeWidth={1.75} />
               <span>Camera Capture</span>
             </button>
-
-            <button
-              type="button"
-              onClick={handleAddMockPhoto}
-              disabled={photos.length >= 4}
-              className="inline-flex items-center gap-2 px-3.5 py-2 border border-stone-300 dark:border-stone-700 hover:border-stone-900 dark:hover:border-stone-100 text-xs font-mono uppercase tracking-wider text-stone-800 dark:text-stone-200 transition-colors cursor-pointer disabled:opacity-40"
-            >
-              <Upload className="w-4 h-4" />
+            <button type="button" onClick={handleAddMockPhoto} disabled={photos.length >= 4} className="btn-secondary">
+              <Upload className="h-4 w-4" strokeWidth={1.75} />
               <span>Upload from Device</span>
             </button>
           </div>
 
           {/* Photos Preview Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             {photos.map((url, idx) => (
               <div
                 key={idx}
-                className="relative aspect-4/3 border border-stone-300 dark:border-stone-700 overflow-hidden bg-stone-100 dark:bg-stone-900 group"
+                className="group relative aspect-4/3 overflow-hidden rounded-xl border border-line bg-tray"
               >
                 <img
                   src={url}
                   alt={`Evidence photo ${idx + 1}`}
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover"
+                  className="h-full w-full object-cover"
                 />
                 <button
                   type="button"
                   onClick={() => handleRemovePhoto(idx)}
-                  className="absolute top-1.5 right-1.5 p-1 bg-black/70 hover:bg-black text-white text-xs transition-colors cursor-pointer"
+                  className="absolute right-1.5 top-1.5 rounded-full bg-black/70 p-1 text-xs text-white transition-colors hover:bg-black cursor-pointer"
                   title="Remove photo"
                 >
-                  <Trash2 className="w-3.5 h-3.5" />
+                  <Trash2 className="h-3.5 w-3.5" />
                 </button>
-                <span className="absolute bottom-1 left-1.5 text-[10px] font-mono text-white bg-black/60 px-1">
+                <span className="absolute bottom-1 left-1.5 rounded bg-black/60 px-1 text-[10px] font-mono text-white">
                   Photo {idx + 1}
                 </span>
               </div>
@@ -251,27 +228,25 @@ export const RaiseNewActivityView: React.FC = () => {
               <button
                 type="button"
                 onClick={handleAddMockPhoto}
-                className="aspect-4/3 border border-dashed border-stone-300 dark:border-stone-700 flex flex-col items-center justify-center p-4 hover:border-stone-600 transition-colors text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 cursor-pointer"
+                className="flex aspect-4/3 flex-col items-center justify-center rounded-xl border border-dashed border-line p-4 text-faint transition-colors hover:border-linestrong hover:text-tint cursor-pointer"
               >
-                <Camera className="w-5 h-5 mb-1" />
-                <span className="text-[11px] font-mono">+ Add Photo</span>
+                <Camera className="mb-1 h-5 w-5" strokeWidth={1.5} />
+                <span className="text-[11px] font-semibold uppercase tracking-wider">+ Add Photo</span>
               </button>
             )}
           </div>
         </div>
 
         {/* Voice Note Section */}
-        <div className="border border-stone-200 dark:border-stone-800 p-6 bg-white/40 dark:bg-stone-900/20">
-          <div className="flex items-center justify-between mb-4">
+        <div className="card-surface p-6">
+          <div className="mb-4 flex items-center justify-between">
             <div>
-              <h3 className="text-xs font-mono uppercase tracking-widest text-stone-600 dark:text-stone-400">
-                Voice Memo (Field Audio Note)
-              </h3>
-              <p className="text-xs text-stone-500 font-sans mt-0.5">
+              <h3 className="label-eyebrow">Voice Memo (Field Audio Note)</h3>
+              <p className="mt-0.5 text-xs text-faint">
                 Record sound of the malfunction or dictate an urgent briefing.
               </p>
             </div>
-            <span className="text-xs font-mono text-stone-400">
+            <span className="font-mono-numbers text-xs text-faint">
               {recordingState === 'recording'
                 ? `Recording: 0:${recordingTimer < 10 ? '0' : ''}${recordingTimer}`
                 : recordingState === 'recorded' || recordingState === 'playing'
@@ -282,44 +257,27 @@ export const RaiseNewActivityView: React.FC = () => {
 
           <div className="flex flex-wrap items-center gap-3">
             {recordingState === 'idle' && (
-              <button
-                type="button"
-                onClick={handleStartRecording}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white hover:bg-red-700 text-xs font-mono tracking-wider uppercase transition-colors cursor-pointer"
-              >
-                <Mic className="w-4 h-4" />
+              <button type="button" onClick={handleStartRecording} className="btn-accent">
+                <Mic className="h-4 w-4" strokeWidth={1.75} />
                 <span>Record Voice Note</span>
               </button>
             )}
 
             {recordingState === 'recording' && (
-              <button
-                type="button"
-                onClick={handleStopRecording}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-950 text-xs font-mono tracking-wider uppercase transition-colors cursor-pointer animate-pulse"
-              >
-                <Square className="w-4 h-4" />
+              <button type="button" onClick={handleStopRecording} className="btn-dark animate-pulse">
+                <Square className="h-4 w-4" strokeWidth={1.75} />
                 <span>Stop Recording</span>
               </button>
             )}
 
             {(recordingState === 'recorded' || recordingState === 'playing') && (
               <>
-                <button
-                  type="button"
-                  onClick={handlePlayback}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-950 text-xs font-mono tracking-wider uppercase transition-colors cursor-pointer"
-                >
-                  <Play className="w-4 h-4" />
+                <button type="button" onClick={handlePlayback} className="btn-dark">
+                  <Play className="h-4 w-4" strokeWidth={1.75} />
                   <span>{recordingState === 'playing' ? 'Playing Memo...' : 'Play Memo'}</span>
                 </button>
-
-                <button
-                  type="button"
-                  onClick={handleResetRecording}
-                  className="inline-flex items-center gap-2 px-3 py-2 border border-stone-300 dark:border-stone-700 text-xs font-mono tracking-wider uppercase text-stone-600 dark:text-stone-400 hover:text-stone-900 transition-colors cursor-pointer"
-                >
-                  <RefreshCw className="w-3.5 h-3.5" />
+                <button type="button" onClick={handleResetRecording} className="btn-secondary">
+                  <RefreshCw className="h-3.5 w-3.5" strokeWidth={1.75} />
                   <span>Re-record</span>
                 </button>
               </>
@@ -328,62 +286,55 @@ export const RaiseNewActivityView: React.FC = () => {
         </div>
 
         {/* Additional Notes Field */}
-        <div className="border border-stone-200 dark:border-stone-800 p-6 bg-white/40 dark:bg-stone-900/20">
-          <label className="block text-xs font-mono uppercase tracking-widest text-stone-600 dark:text-stone-400 mb-2">
-            Additional Client Instructions (Optional)
-          </label>
+        <div className="card-surface p-6">
+          <label className="label-overline mb-2 block">Additional Client Instructions (Optional)</label>
           <textarea
             rows={2}
             value={clientNotes}
             onChange={e => setClientNotes(e.target.value)}
             placeholder="e.g. Preferred entry time, security gate contact, or sensitivity with site guests..."
-            className="w-full bg-stone-50 dark:bg-stone-950 border border-stone-300 dark:border-stone-700 px-3.5 py-2.5 text-sm font-sans text-stone-900 dark:text-stone-100 focus:outline-none focus:border-stone-900 dark:focus:border-stone-100"
+            className="input-field resize-none"
           />
         </div>
 
         {/* Submit Button */}
-        <div className="pt-4 flex items-center justify-between">
+        <div className="flex items-center justify-between pt-4">
           <button
             type="button"
             onClick={() => setCurrentView('raised-activity')}
-            className="text-xs font-mono tracking-wider uppercase text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100"
+            className="btn-ghost"
           >
             Cancel
           </button>
 
-          <button
-            type="submit"
-            className="px-8 py-3.5 bg-stone-950 text-stone-50 hover:bg-stone-800 dark:bg-stone-100 dark:text-stone-950 dark:hover:bg-stone-200 text-xs font-mono tracking-widest uppercase transition-all flex items-center gap-2 cursor-pointer shadow-sm"
-          >
+          <button type="submit" className="btn-accent px-8 py-3">
             <span>Raise Activity</span>
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="h-4 w-4" strokeWidth={1.75} />
           </button>
         </div>
       </form>
 
       {/* Confirmation Success Modal */}
       {submittedCode && (
-        <div className="fixed inset-0 z-50 overflow-y-auto p-4 flex items-center justify-center">
-          <div className="fixed inset-0 bg-stone-950/70 backdrop-blur-sm" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-4">
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm anim-fade" />
 
-          <div className="relative max-w-md w-full bg-[#FAF8F5] dark:bg-[#111111] border border-stone-300 dark:border-stone-800 p-8 shadow-2xl text-center">
-            <div className="w-12 h-12 mx-auto rounded-full bg-emerald-100 dark:bg-emerald-950 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-4">
-              <CheckCircle className="w-6 h-6 stroke-[1.5]" />
+          <div className="card-surface relative mx-auto w-full max-w-md p-8 text-center anim-pop">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-accent/10 text-accent">
+              <CheckCircle className="h-6 w-6" strokeWidth={1.5} />
             </div>
 
-            <h3 className="font-editorial text-2xl font-normal text-stone-900 dark:text-stone-100">
-              Activity Raised Successfully
-            </h3>
+            <h3 className="font-serif text-2xl text-ink">Activity Raised Successfully</h3>
 
-            <p className="text-xs font-mono text-stone-600 dark:text-stone-400 mt-2">
+            <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-tint">
               Your activity code is:
             </p>
 
-            <div className="my-4 py-3 px-4 bg-stone-200/60 dark:bg-stone-800/60 border border-stone-300 dark:border-stone-700 text-xl font-mono font-bold tracking-widest text-stone-900 dark:text-stone-100 select-all">
+            <div className="my-4 rounded-xl border border-line bg-tray px-4 py-3 font-mono-numbers text-xl font-bold tracking-widest text-ink select-all">
               {submittedCode}
             </div>
 
-            <p className="text-xs text-stone-500 dark:text-stone-400 font-sans leading-relaxed mb-6">
+            <p className="mb-6 text-xs leading-relaxed text-tint">
               This ticket has been dispatched to ECHO Operations for immediate triage. Use this code to monitor real-time diagnostic progress.
             </p>
 
@@ -392,7 +343,7 @@ export const RaiseNewActivityView: React.FC = () => {
                 setSelectedActivityId(submittedCode);
                 setCurrentView('activity-detail');
               }}
-              className="w-full py-3 bg-stone-950 text-white dark:bg-stone-100 dark:text-stone-950 text-xs font-mono tracking-widest uppercase transition-colors cursor-pointer"
+              className="btn-accent w-full py-3"
             >
               Track Activity Timeline →
             </button>

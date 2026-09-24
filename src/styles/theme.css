@@ -1,0 +1,158 @@
+/* =====================================================================
+   ECHO CLIENT PORTAL — DESIGN TOKENS & COMPONENT SYSTEM
+   Convix-inspired premium aesthetic: monochrome surfaces + orange accent
+   ===================================================================== */
+
+@theme {
+  /* Light surfaces */
+  --color-page: #ededed;      /* light page background */
+  --color-hero: #d9d9d9;      /* light hero / featured surface */
+  --color-tray: #f5f2ee;      /* light dashboard tray */
+  --color-raise: #ffffff;     /* light raised / card surface */
+
+  /* Text */
+  --color-ink: #0b0f1a;       /* near-black primary type */
+  --color-tint: #575d66;      /* secondary type */
+  --color-faint: #8b9098;     /* muted type */
+
+  /* Lines / separators */
+  --color-line: rgba(11, 15, 26, 0.10);
+  --color-linestrong: rgba(11, 15, 26, 0.22);
+
+  /* Accent + CTA */
+  --color-accent: #ef4d23;
+  --color-accent2: #ff7048;
+  --color-darkcta: #0b0f1a;
+
+  /* Dark surfaces (fallback defaults) */
+  --color-night: #080808;
+  --color-panel: #111111;
+  --color-surface: #151515;
+  --color-raised: #191919;
+
+  /* Adaptive CTA (dark pill in light mode, light pill in dark mode) */
+  --color-cta: #0b0f1a;
+  --color-ctafg: #ffffff;
+}
+
+.dark {
+  --color-page: #080808;
+  --color-hero: #151515;
+  --color-tray: #111111;
+  --color-raise: #191919;
+
+  --color-ink: #f4f3f1;
+  --color-tint: #a9adb4;
+  --color-faint: #6e737b;
+
+  --color-line: rgba(255, 255, 255, 0.09);
+  --color-linestrong: rgba(255, 255, 255, 0.17);
+
+  --color-cta: #ffffff;
+  --color-ctafg: #0b0f1a;
+}
+
+/* ---------------------------------------------------------------------
+   Semantic helpers
+   --------------------------------------------------------------------- */
+@layer components {
+  /* Uppercase Inter supporting labels */
+  .label-overline {
+    @apply text-[10px] font-semibold uppercase tracking-[0.18em] text-faint;
+  }
+  .label-eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.22em] text-tint;
+  }
+
+  /* Editorial serif headline */
+  .h-serif {
+    @apply font-serif text-3xl sm:text-4xl lg:text-5xl leading-[1.04] tracking-tight text-ink;
+  }
+
+  /* Buttons */
+  .btn-dark {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-cta text-ctafg px-5 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-200 hover:opacity-90 active:scale-[0.97] cursor-pointer select-none;
+  }
+  .btn-accent {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-accent text-white px-5 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-200 hover:bg-[#e0431c] active:scale-[0.97] cursor-pointer select-none shadow-sm;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-raise text-ink border border-line px-5 py-2.5 text-xs font-semibold uppercase tracking-wider transition-all duration-200 hover:border-linestrong active:scale-[0.97] cursor-pointer select-none;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full text-tint px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-colors hover:text-ink cursor-pointer select-none;
+  }
+  .icon-btn {
+    @apply relative flex h-9 w-9 items-center justify-center rounded-full text-tint transition-colors hover:text-ink hover:bg-accent/5 cursor-pointer;
+  }
+
+  /* Surfaces */
+  .card-surface {
+    @apply bg-raise border border-line rounded-2xl sm:rounded-3xl;
+  }
+  .tray-surface {
+    @apply bg-tray rounded-2xl sm:rounded-3xl;
+  }
+
+  /* Forms */
+  .input-field {
+    @apply w-full bg-raise border border-line rounded-xl px-4 py-2.5 text-sm text-ink placeholder:text-faint focus:outline-none focus:border-linestrong focus:ring-2 focus:ring-accent/10 transition-colors;
+  }
+
+  /* Pill tabs / filters */
+  .pill-tab {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold transition-colors cursor-pointer;
+  }
+
+  /* Editorial section title (uppercase inter + optional tick) */
+  .section-kicker {
+    @apply flex items-center gap-2.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-faint;
+  }
+  .section-kicker::before {
+    content: '';
+    @apply inline-block h-px w-6 bg-accent;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Subtle gradients (used very selectively)
+   --------------------------------------------------------------------- */
+.gradient-accent {
+  background-image: linear-gradient(135deg, rgba(239, 77, 35, 0.16), rgba(255, 112, 72, 0.05));
+}
+.gradient-success {
+  background-image: linear-gradient(160deg, #ffffff, #f5f2ee);
+}
+.dark .gradient-success {
+  background-image: linear-gradient(160deg, #111111, #080808);
+}
+
+/* ---------------------------------------------------------------------
+   Micro-interactions (fade / slide / pop — no bouncy motion)
+   --------------------------------------------------------------------- */
+@keyframes echo-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes echo-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes echo-pop {
+  from { opacity: 0; transform: scale(0.985) translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes echo-slide-in {
+  from { transform: translateX(100%); }
+  to { transform: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .anim-fade { animation: echo-fade 0.18s ease-out; }
+  .anim-rise { animation: echo-rise 0.26s ease-out; }
+  .anim-pop { animation: echo-pop 0.22s ease-out; }
+  .anim-slide-in { animation: echo-slide-in 0.28s cubic-bezier(0.22, 1, 0.36, 1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade, .anim-rise, .anim-pop, .anim-slide-in { animation: none; }
+}

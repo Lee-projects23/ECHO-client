@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useEcho } from '../../context/EchoContext';
 import { BackToHome } from '../common/BackToHome';
-import { Download, Check, ShieldAlert, ArrowLeft } from 'lucide-react';
+import { Download, Check, ShieldAlert } from 'lucide-react';
+import { Status } from '../ui/Status';
 
 export const MaintenanceDetailView: React.FC = () => {
   const {
@@ -20,9 +21,9 @@ export const MaintenanceDetailView: React.FC = () => {
 
   if (!record) {
     return (
-      <div className="max-w-4xl mx-auto p-12 text-center">
+      <div className="mx-auto max-w-4xl p-12 text-center">
         <BackToHome />
-        <p className="font-editorial text-xl">Maintenance record not found.</p>
+        <p className="font-serif text-xl text-ink">Maintenance record not found.</p>
       </div>
     );
   }
@@ -33,45 +34,37 @@ export const MaintenanceDetailView: React.FC = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-      <div className="flex items-center justify-between mb-2">
+    <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+      <div className="mb-2 flex items-center justify-between">
         <BackToHome onClick={() => setCurrentView('maintenance')} label="Back to Maintenance" />
-        <span className="text-xs font-mono text-stone-400">
-          Record ID: {record.maintenance_id}
-        </span>
+        <span className="font-mono-numbers text-xs text-faint">Record ID: {record.maintenance_id}</span>
       </div>
 
       {/* Main Title Banner */}
-      <div className="pb-8 border-b border-stone-200 dark:border-stone-800 flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div className="flex flex-col justify-between gap-4 border-b border-line pb-8 md:flex-row md:items-end">
         <div>
-          <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-stone-500 dark:text-stone-400">
-            Maintenance Record Inspection
-          </span>
-          <h1 className="font-editorial text-3xl sm:text-5xl font-normal text-stone-900 dark:text-stone-100 tracking-tight mt-1">
-            {record.maintenanceType}
-          </h1>
-          <p className="text-stone-600 dark:text-stone-400 text-sm mt-1 font-mono">
+          <span className="section-kicker">Maintenance Record Inspection</span>
+          <h1 className="h-serif mt-1">{record.maintenanceType}</h1>
+          <p className="mt-1 text-sm text-tint">
             {record.siteName} · Scheduled execution by {record.employeeName}
           </p>
         </div>
 
         {/* Current Status Badge & Action */}
-        <div className="flex items-center gap-3">
-          <div className="px-3 py-1.5 border border-stone-300 dark:border-stone-700 text-xs font-mono tracking-wider uppercase text-stone-800 dark:text-stone-200 bg-stone-100/50 dark:bg-stone-900/50">
-            Status: <strong className="font-semibold">{record.status}</strong>
-          </div>
+        <div className="flex flex-wrap items-center gap-3">
+          <Status status={record.status} dot />
           <button
             onClick={handleDownloadEvidence}
-            className="px-3 py-1.5 border border-stone-300 dark:border-stone-700 hover:border-stone-900 dark:hover:border-stone-100 text-xs font-mono tracking-wider uppercase transition-colors flex items-center gap-1.5 cursor-pointer"
+            className="btn-secondary"
           >
             {downloadSuccess ? (
               <>
-                <Check className="w-3.5 h-3.5 text-emerald-600" />
+                <Check className="h-3.5 w-3.5 text-accent" strokeWidth={2} />
                 <span>Downloaded</span>
               </>
             ) : (
               <>
-                <Download className="w-3.5 h-3.5" />
+                <Download className="h-3.5 w-3.5" strokeWidth={1.75} />
                 <span>Download Report</span>
               </>
             )}
@@ -80,49 +73,43 @@ export const MaintenanceDetailView: React.FC = () => {
       </div>
 
       {/* Read-only Governance Banner */}
-      <div className="my-6 p-3.5 border border-stone-300/80 dark:border-stone-800 bg-stone-100/50 dark:bg-stone-950/40 flex items-center gap-3 text-xs font-mono text-stone-500 dark:text-stone-400">
-        <ShieldAlert className="w-4 h-4 text-stone-600 dark:text-stone-300 shrink-0" />
+      <div className="my-6 flex items-center gap-3 rounded-2xl border border-line bg-tray px-4 py-3 text-xs leading-relaxed text-tint">
+        <ShieldAlert className="h-4 w-4 shrink-0 text-accent" strokeWidth={1.75} />
         <span>
           Client View Only: Costing, assigned personnel, dates, and status verification are managed exclusively by ECHO Operations.
         </span>
       </div>
 
       {/* Content Columns */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-8">
+      <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-12">
         {/* Left Column: Scope & Evidence */}
-        <div className="lg:col-span-8 space-y-8">
+        <div className="space-y-8 lg:col-span-8">
           {/* Detailed Description */}
-          <div className="border border-stone-200 dark:border-stone-800 p-6 bg-white/40 dark:bg-stone-900/20">
-            <h3 className="text-xs font-mono uppercase tracking-widest text-stone-500 dark:text-stone-400 mb-3">
-              Scope of Work & Specification
-            </h3>
-            <p className="text-sm font-sans text-stone-800 dark:text-stone-200 leading-relaxed">
-              {record.description}
-            </p>
+          <div className="card-surface p-6">
+            <h3 className="label-eyebrow mb-3">Scope of Work &amp; Specification</h3>
+            <p className="text-sm leading-relaxed text-ink">{record.description}</p>
           </div>
 
           {/* Photographic Evidence Comparison */}
-          <div className="border border-stone-200 dark:border-stone-800 p-6 bg-white/40 dark:bg-stone-900/20">
-            <div className="flex items-center justify-between pb-4 border-b border-stone-200 dark:border-stone-800">
+          <div className="card-surface p-6">
+            <div className="flex flex-col items-start justify-between gap-4 border-b border-line pb-4 sm:flex-row sm:items-center">
               <div>
-                <h3 className="font-editorial text-2xl text-stone-900 dark:text-stone-100">
-                  Photographic Evidence
-                </h3>
-                <p className="text-xs font-mono text-stone-500 dark:text-stone-400 mt-0.5">
+                <h3 className="font-serif text-2xl text-ink">Photographic Evidence</h3>
+                <p className="mt-0.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-faint">
                   Visual before and after comparison uploaded by assigned specialist
                 </p>
               </div>
 
               {/* Segmented view tabs */}
-              <div className="flex items-center gap-1 bg-stone-200 dark:bg-stone-800 p-1">
+              <div className="flex items-center gap-1 rounded-full border border-line bg-tray p-1">
                 {(['comparison', 'before', 'after'] as const).map(tab => (
                   <button
                     key={tab}
                     onClick={() => setActivePhotoTab(tab)}
-                    className={`px-2.5 py-1 text-xs font-mono uppercase tracking-wider transition-colors cursor-pointer ${
+                    className={`rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-wider transition-colors cursor-pointer ${
                       activePhotoTab === tab
-                        ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-950 font-medium'
-                        : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100'
+                        ? 'bg-cta text-ctafg'
+                        : 'text-faint hover:text-ink'
                     }`}
                   >
                     {tab}
@@ -144,24 +131,22 @@ export const MaintenanceDetailView: React.FC = () => {
                   {/* Before Photo */}
                   {(activePhotoTab === 'comparison' || activePhotoTab === 'before') && (
                     <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-mono uppercase tracking-wider text-stone-600 dark:text-stone-400 font-semibold">
-                          01. Before Execution
-                        </span>
-                        <span className="text-[10px] font-mono text-stone-400">
+                      <div className="mb-2 flex items-center justify-between">
+                        <span className="label-overline">01. Before Execution</span>
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-faint">
                           Initial Inspection Condition
                         </span>
                       </div>
-                      <div className="border border-stone-300 dark:border-stone-700 aspect-4/3 overflow-hidden bg-stone-100 dark:bg-stone-900">
+                      <div className="aspect-4/3 overflow-hidden rounded-xl border border-line bg-tray">
                         {record.beforePhoto ? (
                           <img
                             src={record.beforePhoto}
                             alt="Before maintenance"
                             referrerPolicy="no-referrer"
-                            className="w-full h-full object-cover"
+                            className="h-full w-full object-cover"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center font-mono text-xs text-stone-400">
+                          <div className="flex h-full w-full items-center justify-center text-xs font-semibold uppercase tracking-[0.18em] text-faint">
                             No before photo filed
                           </div>
                         )}
@@ -172,24 +157,22 @@ export const MaintenanceDetailView: React.FC = () => {
                   {/* After Photo */}
                   {(activePhotoTab === 'comparison' || activePhotoTab === 'after') && (
                     <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-mono uppercase tracking-wider text-stone-600 dark:text-stone-400 font-semibold">
-                          02. After Restoration
-                        </span>
-                        <span className="text-[10px] font-mono text-stone-400">
+                      <div className="mb-2 flex items-center justify-between">
+                        <span className="label-overline">02. After Restoration</span>
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-faint">
                           Completed Quality State
                         </span>
                       </div>
-                      <div className="border border-stone-300 dark:border-stone-700 aspect-4/3 overflow-hidden bg-stone-100 dark:bg-stone-900">
+                      <div className="aspect-4/3 overflow-hidden rounded-xl border border-line bg-tray">
                         {record.afterPhoto ? (
                           <img
                             src={record.afterPhoto}
                             alt="After maintenance"
                             referrerPolicy="no-referrer"
-                            className="w-full h-full object-cover"
+                            className="h-full w-full object-cover"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center font-mono text-xs text-stone-400">
+                          <div className="flex h-full w-full items-center justify-center text-xs font-semibold uppercase tracking-[0.18em] text-faint">
                             Work currently in progress; after photo will be uploaded upon completion
                           </div>
                         )}
@@ -198,7 +181,7 @@ export const MaintenanceDetailView: React.FC = () => {
                   )}
                 </div>
               ) : (
-                <div className="p-12 text-center text-xs font-mono text-stone-500">
+                <div className="rounded-xl border border-dashed border-line p-12 text-center text-xs font-semibold uppercase tracking-[0.18em] text-faint">
                   No photographic evidence uploaded yet for this scheduled work order.
                 </div>
               )}
@@ -206,72 +189,58 @@ export const MaintenanceDetailView: React.FC = () => {
           </div>
 
           {/* Operational Notes */}
-          <div className="border border-stone-200 dark:border-stone-800 p-6 bg-white/40 dark:bg-stone-900/20">
-            <h3 className="text-xs font-mono uppercase tracking-widest text-stone-500 dark:text-stone-400 mb-2">
-              Admin & Technician Field Log Notes
-            </h3>
-            <p className="text-sm font-sans text-stone-700 dark:text-stone-300 leading-relaxed italic bg-stone-100/60 dark:bg-stone-950/40 p-4 border-l-2 border-stone-400 dark:border-stone-600">
+          <div className="card-surface p-6">
+            <h3 className="label-eyebrow mb-3">Admin &amp; Technician Field Log Notes</h3>
+            <p className="border-l-2 border-accent bg-tray p-4 text-sm italic leading-relaxed text-tint">
               "{record.notes}"
             </p>
           </div>
         </div>
 
         {/* Right Column: Site & Execution Metadata */}
-        <div className="lg:col-span-4 space-y-6">
+        <div className="space-y-6 lg:col-span-4">
           {/* Site Metadata Card */}
-          <div className="border border-stone-200 dark:border-stone-800 p-6 bg-white/40 dark:bg-stone-900/20">
-            <h3 className="text-xs font-mono uppercase tracking-widest text-stone-500 dark:text-stone-400 mb-4 pb-2 border-b border-stone-200 dark:border-stone-800">
-              Site Location
-            </h3>
-            <div className="space-y-3 text-xs font-mono">
+          <div className="card-surface p-6">
+            <h3 className="label-eyebrow mb-4 border-b border-line pb-2">Site Location</h3>
+            <div className="space-y-3 text-xs">
               <div>
-                <span className="text-stone-400 block text-[10px] uppercase">Client Company</span>
-                <span className="text-stone-900 dark:text-stone-100 font-medium">
-                  {client.companyName}
-                </span>
+                <span className="label-overline block">Client Company</span>
+                <span className="mt-0.5 block font-medium text-ink">{client.companyName}</span>
               </div>
               <div>
-                <span className="text-stone-400 block text-[10px] uppercase">Site Name</span>
-                <span className="text-stone-900 dark:text-stone-100 font-medium">
-                  {record.siteName}
-                </span>
+                <span className="label-overline block">Site Name</span>
+                <span className="mt-0.5 block font-medium text-ink">{record.siteName}</span>
               </div>
               <div>
-                <span className="text-stone-400 block text-[10px] uppercase">Registered Address</span>
-                <span className="text-stone-700 dark:text-stone-300">
-                  {record.siteAddress}
-                </span>
+                <span className="label-overline block">Registered Address</span>
+                <span className="mt-0.5 block leading-relaxed text-tint">{record.siteAddress}</span>
               </div>
             </div>
           </div>
 
           {/* Execution Metadata Card */}
-          <div className="border border-stone-200 dark:border-stone-800 p-6 bg-white/40 dark:bg-stone-900/20">
-            <h3 className="text-xs font-mono uppercase tracking-widest text-stone-500 dark:text-stone-400 mb-4 pb-2 border-b border-stone-200 dark:border-stone-800">
-              Execution Details
-            </h3>
-            <div className="space-y-3.5 text-xs font-mono">
+          <div className="card-surface p-6">
+            <h3 className="label-eyebrow mb-4 border-b border-line pb-2">Execution Details</h3>
+            <div className="space-y-3.5 text-xs">
               <div>
-                <span className="text-stone-400 block text-[10px] uppercase">Assigned Employee</span>
-                <span className="text-stone-900 dark:text-stone-100 font-medium">
-                  {record.employeeName}
-                </span>
-                <span className="text-[11px] text-stone-500 block">
+                <span className="label-overline block">Assigned Employee</span>
+                <span className="mt-0.5 block font-medium text-ink">{record.employeeName}</span>
+                <span className="mt-0.5 block text-[11px] text-faint">
                   {record.employeeRole} (ID: {record.employee_id})
                 </span>
               </div>
               <div>
-                <span className="text-stone-400 block text-[10px] uppercase">Scheduled Date & Time</span>
-                <span className="text-stone-900 dark:text-stone-100">
+                <span className="label-overline block">Scheduled Date &amp; Time</span>
+                <span className="mt-0.5 block font-medium text-ink">
                   {record.date} at {record.time}
                 </span>
               </div>
               <div>
-                <span className="text-stone-400 block text-[10px] uppercase">Billed Service Cost</span>
-                <span className="text-stone-900 dark:text-stone-100 font-medium text-sm font-mono-numbers">
+                <span className="label-overline block">Billed Service Cost</span>
+                <span className="mt-0.5 block font-mono-numbers text-sm font-medium text-ink">
                   ₹{record.cost.toLocaleString('en-IN')}
                 </span>
-                <span className="text-[10px] text-stone-400 block">
+                <span className="mt-0.5 block text-[10px] text-faint">
                   Included in monthly comprehensive billing
                 </span>
               </div>

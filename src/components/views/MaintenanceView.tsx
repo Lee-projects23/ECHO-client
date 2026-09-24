@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useEcho } from '../../context/EchoContext';
 import { BackToHome } from '../common/BackToHome';
-import { ArrowRight, Filter, Eye } from 'lucide-react';
-import { MaintenanceStatus } from '../../types/echo';
+import { MaintenanceRow } from '../ui/MaintenanceRow';
+import { EmptyState } from '../ui/EmptyState';
+import { Status } from '../ui/Status';
+import { Wrench } from 'lucide-react';
 
 export const MaintenanceView: React.FC = () => {
   const { maintenance, setSelectedMaintenanceId, setCurrentView } = useEcho();
@@ -18,43 +20,37 @@ export const MaintenanceView: React.FC = () => {
   const uniqueSites = Array.from(new Set(maintenance.map(m => m.siteName)));
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
       <BackToHome />
 
       {/* Header */}
-      <div className="pb-8 border-b border-stone-200 dark:border-stone-800 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+      <div className="flex flex-col justify-between gap-4 border-b border-line pb-8 sm:flex-row sm:items-end">
         <div>
-          <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-stone-500 dark:text-stone-400">
-            Operations & Field Works
-          </span>
-          <h1 className="font-editorial text-4xl sm:text-5xl font-normal text-stone-900 dark:text-stone-100 tracking-tight mt-1">
-            Maintenance
-          </h1>
-          <p className="text-stone-600 dark:text-stone-400 text-sm mt-1 font-mono">
+          <span className="section-kicker">Operations &amp; Field Works</span>
+          <h1 className="h-serif mt-1">Maintenance</h1>
+          <p className="mt-1 text-sm text-tint">
             Scheduled, ongoing, and verified maintenance across your facilities.
           </p>
         </div>
 
         {/* Read-only rule notice */}
-        <div className="text-[11px] font-mono text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-stone-800 px-3 py-2 bg-stone-100/50 dark:bg-stone-900/30 max-w-xs">
-          Maintained and verified by ECHO Operations. Client access is view & review only.
+        <div className="max-w-xs rounded-full border border-line bg-raise px-3.5 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-tint">
+          Maintained and verified by ECHO Operations. Client access is view &amp; review only.
         </div>
       </div>
 
       {/* Filter Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 my-8 pb-4 border-b border-stone-200/60 dark:border-stone-800/60">
+      <div className="my-8 flex flex-wrap items-center justify-between gap-4 border-b border-line pb-4">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs font-mono uppercase tracking-widest text-stone-500 mr-2">
-            Status:
-          </span>
+          <span className="label-overline mr-1">Status:</span>
           {['All', 'In Progress', 'Scheduled', 'Completed'].map(st => (
             <button
               key={st}
               onClick={() => setStatusFilter(st)}
-              className={`px-3 py-1.5 text-xs font-mono transition-colors cursor-pointer ${
+              className={`pill-tab ${
                 statusFilter === st
-                  ? 'bg-stone-900 text-stone-50 dark:bg-stone-100 dark:text-stone-950 font-medium'
-                  : 'text-stone-600 dark:text-stone-400 hover:bg-stone-200/60 dark:hover:bg-stone-800/60'
+                  ? 'bg-cta text-ctafg'
+                  : 'bg-raise text-faint hover:text-ink'
               }`}
             >
               {st}
@@ -63,110 +59,61 @@ export const MaintenanceView: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-xs font-mono uppercase tracking-widest text-stone-500">
-            Site:
-          </span>
-          <select
-            value={siteFilter}
-            onChange={e => setSiteFilter(e.target.value)}
-            className="text-xs font-mono bg-stone-100 dark:bg-stone-900 border border-stone-300 dark:border-stone-700 px-2.5 py-1.5 text-stone-800 dark:text-stone-200 focus:outline-none"
-          >
-            <option value="All">All Sites</option>
-            {uniqueSites.map(s => (
-              <option key={s} value={s}>
-                {s}
-              </option>
-            ))}
-          </select>
+          <span className="label-overline">Site:</span>
+          <div className="relative">
+            <select
+              value={siteFilter}
+              onChange={e => setSiteFilter(e.target.value)}
+              className="appearance-none rounded-full border border-line bg-raise py-2 pl-3.5 pr-9 text-xs font-medium text-ink focus:outline-none focus:border-linestrong"
+            >
+              <option value="All">All Sites</option>
+              {uniqueSites.map(s => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </select>
+            <span className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-[9px] text-faint">
+              ▼
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Maintenance Table */}
-      <div className="overflow-x-auto border border-stone-200 dark:border-stone-800 bg-white/40 dark:bg-stone-900/20">
-        <table className="w-full text-left text-sm font-sans border-collapse">
-          <thead>
-            <tr className="border-b border-stone-200 dark:border-stone-800 bg-stone-100/60 dark:bg-stone-950/60 text-[11px] font-mono uppercase tracking-wider text-stone-500 dark:text-stone-400">
-              <th className="py-3.5 px-4 font-normal">No.</th>
-              <th className="py-3.5 px-4 font-normal">Site</th>
-              <th className="py-3.5 px-4 font-normal">Maintenance</th>
-              <th className="py-3.5 px-4 font-normal">Employee</th>
-              <th className="py-3.5 px-4 font-normal">Date</th>
-              <th className="py-3.5 px-4 font-normal">Time</th>
-              <th className="py-3.5 px-4 font-normal">Status</th>
-              <th className="py-3.5 px-4 font-normal text-right">View</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-stone-200 dark:divide-stone-800">
-            {filteredMaintenance.length === 0 ? (
-              <tr>
-                <td colSpan={8} className="py-12 text-center text-xs font-mono text-stone-500">
-                  No maintenance records available matching the filter.
-                </td>
-              </tr>
-            ) : (
-              filteredMaintenance.map((m, idx) => (
-                <tr
-                  key={m.maintenance_id}
-                  onClick={() => {
-                    setSelectedMaintenanceId(m.maintenance_id);
-                    setCurrentView('maintenance-detail');
-                  }}
-                  className="hover:bg-stone-100/50 dark:hover:bg-stone-800/40 transition-colors cursor-pointer group"
-                >
-                  <td className="py-4 px-4 font-mono text-xs text-stone-500">
-                    {String(idx + 1).padStart(2, '0')}
-                  </td>
-                  <td className="py-4 px-4 text-xs font-mono text-stone-700 dark:text-stone-300 font-medium">
-                    {m.siteName}
-                  </td>
-                  <td className="py-4 px-4 text-xs text-stone-900 dark:text-stone-100">
-                    <span className="group-hover:underline font-medium block">
-                      {m.maintenanceType}
-                    </span>
-                    <span className="text-[11px] text-stone-500 line-clamp-1">
-                      {m.description}
-                    </span>
-                  </td>
-                  <td className="py-4 px-4 text-xs font-mono text-stone-600 dark:text-stone-400">
-                    {m.employeeName}
-                  </td>
-                  <td className="py-4 px-4 text-xs font-mono text-stone-500">
-                    {m.date}
-                  </td>
-                  <td className="py-4 px-4 text-xs font-mono text-stone-500">
-                    {m.time}
-                  </td>
-                  <td className="py-4 px-4 text-xs font-mono">
-                    <span
-                      className={`inline-block px-2 py-0.5 border ${
-                        m.status === 'Completed'
-                          ? 'border-emerald-600/50 text-emerald-700 dark:text-emerald-400'
-                          : m.status === 'In Progress'
-                          ? 'border-amber-600/50 text-amber-700 dark:text-amber-400'
-                          : 'border-stone-400 text-stone-600 dark:text-stone-400'
-                      }`}
-                    >
-                      {m.status}
-                    </span>
-                  </td>
-                  <td className="py-4 px-4 text-right">
-                    <button
-                      onClick={e => {
-                        e.stopPropagation();
-                        setSelectedMaintenanceId(m.maintenance_id);
-                        setCurrentView('maintenance-detail');
-                      }}
-                      className="inline-flex items-center gap-1 text-xs font-mono tracking-wider uppercase text-stone-600 dark:text-stone-400 group-hover:text-stone-950 dark:group-hover:text-stone-100"
-                    >
-                      <span>View</span>
-                      <ArrowRight className="w-3 h-3" />
-                    </button>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+      {/* Maintenance Index */}
+      <div className="flex items-start justify-between gap-4 pb-2">
+        <span className="label-overline">Record Index</span>
+        <span className="font-mono-numbers text-xs text-faint">
+          {filteredMaintenance.length} {filteredMaintenance.length === 1 ? 'record' : 'records'}
+        </span>
+      </div>
+
+      <div className="divide-y divide-line border-y border-line">
+        {filteredMaintenance.length === 0 ? (
+          <EmptyState
+            icon={Wrench}
+            title="No maintenance records found"
+            description="Nothing matches the current filters. Try another status or site."
+            className="mt-6"
+          />
+        ) : (
+          filteredMaintenance.map(m => (
+            <MaintenanceRow
+              key={m.maintenance_id}
+              id={`MT-${m.maintenance_id.replace(/\D/g, '').padStart(3, '0')}`}
+              title={m.maintenanceType}
+              category={`${m.siteName} · ${m.employeeName}`}
+              priority={m.status}
+              status={<Status status={m.status} />}
+              cost={`₹${m.cost.toLocaleString('en-IN')}`}
+              meta={`${m.date} · ${m.time}`}
+              onClick={() => {
+                setSelectedMaintenanceId(m.maintenance_id);
+                setCurrentView('maintenance-detail');
+              }}
+            />
+          ))
+        )}
       </div>
     </div>
   );

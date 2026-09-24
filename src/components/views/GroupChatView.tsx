@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useEcho } from '../../context/EchoContext';
 import { BackToHome } from '../common/BackToHome';
-import { Send, Paperclip, Mic, Lock, ShieldCheck, Play, FileText, Image as ImageIcon } from 'lucide-react';
+import { Send, Mic, Lock, FileText, Image as ImageIcon } from 'lucide-react';
 import { ChatGroup } from '../../types/echo';
 
 export const GroupChatView: React.FC = () => {
   const {
     chatGroups,
     sendChatMessage,
-    client,
   } = useEcho();
 
   const [activeGroupId, setActiveGroupId] = useState<string>(chatGroups[0]?.groupId || '');
@@ -55,71 +54,57 @@ export const GroupChatView: React.FC = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
       <BackToHome />
 
       {/* Header */}
-      <div className="pb-8 border-b border-stone-200 dark:border-stone-800 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+      <div className="flex flex-col justify-between gap-4 border-b border-line pb-8 sm:flex-row sm:items-end">
         <div>
-          <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-stone-500 dark:text-stone-400">
-            Tri-Party Operational Comms
-          </span>
-          <h1 className="font-editorial text-4xl sm:text-5xl font-normal text-stone-900 dark:text-stone-100 tracking-tight mt-1">
-            Group Chat
-          </h1>
-          <p className="text-stone-600 dark:text-stone-400 text-sm mt-1 font-mono">
+          <span className="section-kicker">Tri-Party Operational Comms</span>
+          <h1 className="h-serif mt-1">Group Chat</h1>
+          <p className="mt-1 text-sm text-tint">
             Direct operational channels uniting Client, ECHO Admin, and assigned Employees.
           </p>
         </div>
 
         {/* Admin-created group rule banner */}
-        <div className="text-[11px] font-mono text-stone-500 dark:text-stone-400 border border-stone-200 dark:border-stone-800 px-3 py-2 bg-stone-100/50 dark:bg-stone-900/30 flex items-center gap-2">
-          <Lock className="w-3.5 h-3.5 text-stone-500 shrink-0" />
+        <div className="flex items-center gap-2 rounded-xl border border-line bg-tray px-3 py-2 text-[11px] text-tint">
+          <Lock className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
           <span>Groups are created and managed exclusively by ECHO Operations.</span>
         </div>
       </div>
 
       {/* Main Chat Interface */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 border border-stone-200 dark:border-stone-800 bg-white/40 dark:bg-stone-900/20 mt-8 min-h-[600px]">
+      <div className="mt-8 min-h-[600px] overflow-hidden rounded-3xl border border-line bg-white/40 dark:bg-[#0b0b0b]/20 lg:grid lg:grid-cols-12">
         {/* Left Column: Conversation Channels */}
-        <div className="lg:col-span-4 border-b lg:border-b-0 lg:border-r border-stone-200 dark:border-stone-800 flex flex-col">
-          <div className="p-4 border-b border-stone-200 dark:border-stone-800 bg-stone-100/60 dark:bg-stone-950/60">
-            <span className="text-[11px] font-mono uppercase tracking-widest text-stone-500 dark:text-stone-400">
-              Assigned Operational Channels ({chatGroups.length})
-            </span>
+        <div className="flex flex-col border-b border-line lg:col-span-4 lg:border-b-0 lg:border-r">
+          <div className="border-b border-line bg-tray px-5 py-4">
+            <span>Operational Channels ({chatGroups.length})</span>
           </div>
 
-          <div className="flex-1 overflow-y-auto divide-y divide-stone-200/60 dark:divide-stone-800/60">
+          <div className="max-h-[460px] flex-1 divide-y divide-line overflow-y-auto">
             {chatGroups.map(grp => {
               const isSelected = grp.groupId === activeGroupId;
               return (
                 <div
                   key={grp.groupId}
                   onClick={() => setActiveGroupId(grp.groupId)}
-                  className={`p-4 transition-colors cursor-pointer ${
+                  className={`cursor-pointer px-5 py-4 transition-colors ${
                     isSelected
-                      ? 'bg-stone-200/70 dark:bg-stone-800/70'
-                      : 'hover:bg-stone-100/50 dark:hover:bg-stone-800/30'
+                      ? 'bg-tray'
+                      : 'hover:bg-tray/60'
                   }`}
                 >
                   <div className="flex items-baseline justify-between">
-                    <span className="text-xs font-mono uppercase tracking-wider text-stone-500 dark:text-stone-400">
-                      {grp.siteName}
-                    </span>
-                    <span className="text-[11px] font-mono text-stone-400">
-                      {grp.lastMessageTime}
-                    </span>
+                    <span className="label-overline">{grp.siteName}</span>
+                    <span className="font-mono-numbers text-[11px] text-faint">{grp.lastMessageTime}</span>
                   </div>
 
-                  <h4 className="text-sm font-semibold text-stone-900 dark:text-stone-100 mt-1 font-mono">
-                    {grp.name}
-                  </h4>
+                  <h4 className="mt-1 text-sm font-semibold tracking-wide text-ink">{grp.name}</h4>
 
-                  <p className="text-xs text-stone-600 dark:text-stone-400 truncate mt-1 font-sans">
-                    {grp.lastMessage}
-                  </p>
+                  <p className="mt-1 truncate text-xs text-tint">{grp.lastMessage}</p>
 
-                  <div className="mt-2.5 flex items-center gap-2 text-[10px] font-mono text-stone-400">
+                  <div className="mt-2.5 flex items-center gap-2 font-mono-numbers text-[10px] text-faint">
                     <span>Admin: {grp.adminName}</span>
                     <span>·</span>
                     <span>{grp.assignedEmployees.length} Specialists</span>
@@ -131,33 +116,31 @@ export const GroupChatView: React.FC = () => {
         </div>
 
         {/* Right Column: Active Conversation Stream & Input */}
-        <div className="lg:col-span-8 flex flex-col justify-between">
+        <div className="flex flex-col justify-between lg:col-span-8">
           {activeGroup ? (
             <>
               {/* Conversation Header */}
-              <div className="p-4 sm:p-5 border-b border-stone-200 dark:border-stone-800 bg-stone-100/40 dark:bg-stone-950/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex flex-col justify-between gap-3 border-b border-line bg-tray/50 px-5 py-4 sm:flex-row sm:items-center">
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="font-editorial text-xl font-normal text-stone-900 dark:text-stone-100">
-                      {activeGroup.name}
-                    </h3>
-                    <span className="text-[10px] font-mono px-1.5 py-0.5 border border-stone-300 dark:border-stone-700 text-stone-600 dark:text-stone-400">
+                    <h3 className="font-serif text-xl text-ink">{activeGroup.name}</h3>
+                    <span className="rounded-full border border-line px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-faint">
                       Active Channel
                     </span>
                   </div>
-                  <p className="text-xs font-mono text-stone-500 dark:text-stone-400 mt-0.5">
+                  <p className="mt-0.5 font-mono-numbers text-xs text-faint">
                     Site: {activeGroup.siteName} · ECHO Admin: {activeGroup.adminName}
                   </p>
                 </div>
 
                 {/* Participants List */}
-                <div className="flex items-center gap-1.5 text-xs font-mono text-stone-500">
-                  <span className="text-[10px] uppercase text-stone-400">Assigned:</span>
-                  <div className="flex items-center gap-1 flex-wrap">
+                <div className="flex flex-wrap items-center gap-1.5 text-xs text-tint">
+                  <span className="label-overline">Assigned</span>
+                  <div className="flex flex-wrap items-center gap-1">
                     {activeGroup.assignedEmployees.map((name: string) => (
                       <span
                         key={name}
-                        className="px-2 py-0.5 bg-stone-200/80 dark:bg-stone-800/80 text-stone-800 dark:text-stone-200 text-[11px]"
+                        className="rounded-full bg-tray px-2 py-0.5 text-[11px] font-medium text-ink ring-1 ring-line"
                       >
                         {name}
                       </span>
@@ -167,7 +150,7 @@ export const GroupChatView: React.FC = () => {
               </div>
 
               {/* Message Stream */}
-              <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-5 max-h-[500px]">
+              <div className="max-h-[500px] flex-1 space-y-5 overflow-y-auto p-4 sm:p-6">
                 {activeGroup.messages.map(msg => {
                   const isClient = msg.senderRole === 'client';
                   const isAdmin = msg.senderRole === 'admin';
@@ -177,63 +160,69 @@ export const GroupChatView: React.FC = () => {
                       className={`flex flex-col ${isClient ? 'items-end' : 'items-start'}`}
                     >
                       {/* Sender Meta */}
-                      <div className="flex items-center gap-2 mb-1 px-1">
-                        <span className="text-xs font-mono font-medium text-stone-700 dark:text-stone-300">
-                          {msg.senderName}
-                        </span>
-                        <span className="text-[10px] font-mono uppercase px-1 border border-stone-300 dark:border-stone-700 text-stone-500">
+                      <div className="mb-1 flex items-center gap-2 px-1">
+                        <span className="text-xs font-medium text-tint">{msg.senderName}</span>
+                        <span
+                          className={`rounded-full border px-1.5 py-px text-[10px] font-semibold uppercase tracking-[0.12em] ${
+                            isClient
+                              ? 'border-accent/40 text-accent'
+                              : isAdmin
+                              ? 'border-linestrong text-tint'
+                              : 'border-line text-faint'
+                          }`}
+                        >
                           {msg.senderRole}
                         </span>
-                        <span className="text-[10px] font-mono text-stone-400">
-                          {msg.timestamp}
-                        </span>
+                        <span className="font-mono-numbers text-[10px] text-faint">{msg.timestamp}</span>
                       </div>
 
                       {/* Message Bubble */}
                       <div
-                        className={`max-w-md p-3.5 text-sm font-sans ${
+                        className={`max-w-md rounded-2xl p-3.5 text-sm ${
                           isClient
-                            ? 'bg-stone-900 text-stone-50 dark:bg-stone-100 dark:text-stone-950'
+                            ? 'bg-cta text-ctafg'
                             : isAdmin
-                            ? 'bg-stone-200/80 dark:bg-stone-800/80 text-stone-900 dark:text-stone-100 border border-stone-300 dark:border-stone-700'
-                            : 'bg-stone-100 dark:bg-stone-900 text-stone-800 dark:text-stone-200 border border-stone-200 dark:border-stone-800'
+                            ? 'rounded-ts-none bg-raise text-ink ring-1 ring-line'
+                            : 'rounded-ts-none bg-tray text-ink'
                         }`}
                       >
                         {msg.text && <p className="leading-relaxed">{msg.text}</p>}
 
                         {/* Attachments */}
                         {msg.attachment && (
-                          <div className="mt-2.5 pt-2 border-t border-stone-400/30 dark:border-stone-600/30">
+                          <div className="mt-2.5 border-t border-line/60 pt-2">
                             {msg.attachment.type === 'image' && msg.attachment.url && (
-                              <div className="mt-1 aspect-video overflow-hidden border border-stone-300 dark:border-stone-700">
+                              <div className="mt-1 overflow-hidden rounded-xl border border-line">
                                 <img
                                   src={msg.attachment.url}
                                   alt={msg.attachment.name}
                                   referrerPolicy="no-referrer"
-                                  className="w-full h-full object-cover"
+                                  className="h-full w-full object-cover"
                                 />
                               </div>
                             )}
 
                             {msg.attachment.type === 'document' && (
-                              <div className="flex items-center gap-2 text-xs font-mono p-2 bg-black/10 dark:bg-white/10">
-                                <FileText className="w-4 h-4 shrink-0" />
+                              <div className="flex items-center gap-2 rounded-xl bg-black/5 px-3 py-2 font-mono-numbers text-xs text-inherit dark:bg-white/5">
+                                <FileText className="h-4 w-4 shrink-0" strokeWidth={1.75} />
                                 <span className="truncate">{msg.attachment.name}</span>
                                 <span className="text-[10px] opacity-75">{msg.attachment.size}</span>
                               </div>
                             )}
 
                             {msg.attachment.type === 'audio' && (
-                              <div className="flex items-center justify-between gap-3 text-xs font-mono p-2 bg-black/10 dark:bg-white/10">
-                                <div className="flex items-center gap-2">
-                                  <Mic className="w-3.5 h-3.5 text-red-500" />
-                                  <span>{msg.attachment.name}</span>
-                                  <span className="text-[10px] opacity-75">({msg.attachment.duration})</span>
+                              <div className="flex items-center justify-between gap-3 rounded-xl bg-black/5 px-3 py-2 font-mono-numbers text-xs text-inherit dark:bg-white/5">
+                                <div className="flex min-w-0 items-center gap-2">
+                                  <Mic className="h-3.5 w-3.5 shrink-0 text-red-500" strokeWidth={1.75} />
+                                  <span className="truncate">{msg.attachment.name}</span>
+                                  <span className="shrink-0 text-[10px] opacity-75">
+                                    ({msg.attachment.duration})
+                                  </span>
                                 </div>
                                 <button
                                   type="button"
                                   onClick={() => handlePlayVoice(msg.id)}
-                                  className="px-2 py-1 bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 text-[10px] uppercase font-mono cursor-pointer"
+                                  className="shrink-0 cursor-pointer rounded-full bg-ink px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-ctafg"
                                 >
                                   {playingVoiceId === msg.id ? 'Playing...' : 'Play'}
                                 </button>
@@ -248,34 +237,34 @@ export const GroupChatView: React.FC = () => {
               </div>
 
               {/* Message Composer */}
-              <div className="p-4 border-t border-stone-200 dark:border-stone-800 bg-stone-100/50 dark:bg-stone-950/50">
+              <div className="border-t border-line bg-tray/40 px-4 py-4 sm:px-5">
                 {/* Quick Attachment Triggers */}
-                <div className="flex items-center gap-2 mb-2 text-xs font-mono text-stone-500">
-                  <span className="text-[10px] uppercase tracking-wider text-stone-400">Attach:</span>
+                <div className="mb-2 flex items-center gap-2 text-xs text-faint">
+                  <span>Attach:</span>
                   <button
                     type="button"
                     onClick={() => handleSendMockAttachment('image')}
-                    className="hover:text-stone-900 dark:hover:text-stone-100 flex items-center gap-1 cursor-pointer"
+                    className="flex cursor-pointer items-center gap-1 transition-colors hover:text-ink"
                   >
-                    <ImageIcon className="w-3 h-3" />
+                    <ImageIcon className="h-3 w-3" strokeWidth={1.75} />
                     <span>Photo</span>
                   </button>
                   <span>·</span>
                   <button
                     type="button"
                     onClick={() => handleSendMockAttachment('document')}
-                    className="hover:text-stone-900 dark:hover:text-stone-100 flex items-center gap-1 cursor-pointer"
+                    className="flex cursor-pointer items-center gap-1 transition-colors hover:text-ink"
                   >
-                    <FileText className="w-3 h-3" />
+                    <FileText className="h-3 w-3" strokeWidth={1.75} />
                     <span>Document</span>
                   </button>
                   <span>·</span>
                   <button
                     type="button"
                     onClick={() => handleSendMockAttachment('audio')}
-                    className="hover:text-stone-900 dark:hover:text-stone-100 flex items-center gap-1 cursor-pointer"
+                    className="flex cursor-pointer items-center gap-1 transition-colors hover:text-ink"
                   >
-                    <Mic className="w-3 h-3 text-red-500" />
+                    <Mic className="h-3 w-3 text-red-500" strokeWidth={1.75} />
                     <span>Voice Memo</span>
                   </button>
                 </div>
@@ -286,20 +275,20 @@ export const GroupChatView: React.FC = () => {
                     value={inputText}
                     onChange={e => setInputText(e.target.value)}
                     placeholder="Type your message to operations..."
-                    className="flex-1 bg-stone-50 dark:bg-stone-900 border border-stone-300 dark:border-stone-700 px-3.5 py-2.5 text-xs font-sans text-stone-900 dark:text-stone-100 focus:outline-none focus:border-stone-900 dark:focus:border-stone-100"
+                    className="input-field flex-1 bg-raise font-sans"
                   />
                   <button
                     type="submit"
-                    className="px-4 py-2.5 bg-stone-950 text-white dark:bg-stone-100 dark:text-stone-950 hover:bg-stone-800 dark:hover:bg-stone-200 text-xs font-mono tracking-wider uppercase transition-colors flex items-center gap-1.5 cursor-pointer shrink-0"
+                    className="btn-dark shrink-0 px-4 py-2.5"
                   >
                     <span>Send</span>
-                    <Send className="w-3.5 h-3.5" />
+                    <Send className="h-3.5 w-3.5" strokeWidth={1.75} />
                   </button>
                 </form>
               </div>
             </>
           ) : (
-            <div className="p-12 text-center text-xs font-mono text-stone-500">
+            <div className="p-12 text-center text-xs font-semibold uppercase tracking-[0.16em] text-faint">
               No active group conversation selected.
             </div>
           )}

@@ -1,14 +1,28 @@
+@import "./styles/fonts.css";
 @import "tailwindcss";
+@import "./styles/theme.css";
 
-@theme {
-  --font-serif: "Cormorant Garamond", Georgia, serif;
-  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
-}
+/* Class-based dark mode (toggled on <html> by EchoContext) */
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
   html {
     font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-page text-ink transition-colors duration-300;
+  }
+
+  ::selection {
+    @apply bg-[#ef4d23] text-white;
+  }
+
+  button,
+  [role="button"] {
+    cursor: pointer;
   }
 
   /* Elegant thin scrollbar */
@@ -20,11 +34,18 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(120, 113, 108, 0.25);
+    background: var(--color-linestrong);
     border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(120, 113, 108, 0.4);
+    background: var(--color-faint);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-ink);
   }
 }
 
@@ -36,4 +57,3 @@
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
 }
-

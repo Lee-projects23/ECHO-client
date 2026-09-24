@@ -27,10 +27,10 @@ export const BackToHome: React.FC<BackToHomeProps> = ({
     <button
       onClick={handleClick}
       type="button"
-      className={`inline-flex items-center gap-2 text-xs font-mono tracking-wider text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100 transition-colors uppercase py-1 cursor-pointer group mb-6 ${className}`}
+      className={`group mb-6 inline-flex items-center gap-2 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-faint transition-colors hover:text-ink cursor-pointer ${className}`}
     >
-      <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1" />
-      <span>← {label}</span>
+      <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-0.5" strokeWidth={1.75} />
+      <span>{label}</span>
     </button>
   );
 };

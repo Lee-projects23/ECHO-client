@@ -26,7 +26,6 @@ import { HelpView } from './components/views/HelpView';
 const PortalMainContent: React.FC = () => {
   const { currentView, isAuthenticated, setCurrentView } = useEcho();
 
-  // If not authenticated or on welcome view, render WelcomeView
   if (!isAuthenticated || currentView === 'welcome') {
     return <WelcomeView />;
   }
@@ -69,63 +68,44 @@ const PortalMainContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAF8F5] dark:bg-[#0A0A0A] text-stone-900 dark:text-stone-100 transition-colors duration-200">
+    <div className="flex min-h-screen flex-col bg-page text-ink transition-colors duration-300">
       <Navbar />
       <Sidebar />
       <GlobalSearchModal />
       <NotificationsDrawer />
 
-      <main className="flex-1">
-        {renderActiveView()}
-      </main>
+      <main className="flex-1">{renderActiveView()}</main>
 
       {/* Restrained Editorial Footer */}
-      <footer className="mt-20 border-t border-stone-200 dark:border-stone-800 bg-[#FAF8F5] dark:bg-[#0A0A0A] py-12 px-4 sm:px-6 lg:px-8 transition-colors">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-baseline justify-between gap-6">
+      <footer className="mt-20 border-t border-line bg-page px-4 py-12 transition-colors sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-6xl flex-col items-baseline justify-between gap-6 md:flex-row">
           <div>
-            <span className="font-editorial text-2xl tracking-widest font-semibold uppercase block">
-              ECHO
-            </span>
-            <p className="text-xs font-mono text-stone-500 dark:text-stone-400 mt-1">
+            <span className="font-serif text-2xl tracking-wide uppercase text-ink">ECHO</span>
+            <p className="mt-1 text-xs uppercase tracking-[0.18em] text-faint">
               Operational Workspace Layer 03 · Authorized Client Session
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-6 text-xs font-mono text-stone-500 dark:text-stone-400">
-            <button
-              onClick={() => setCurrentView('home')}
-              className="hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
-            >
+          <div className="flex flex-wrap items-center gap-6 text-xs font-semibold uppercase tracking-widest text-faint">
+            <button onClick={() => setCurrentView('home')} className="transition-colors hover:text-ink">
               Home
             </button>
-            <button
-              onClick={() => setCurrentView('maintenance')}
-              className="hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
-            >
+            <button onClick={() => setCurrentView('maintenance')} className="transition-colors hover:text-ink">
               Maintenance
             </button>
-            <button
-              onClick={() => setCurrentView('raised-activity')}
-              className="hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
-            >
+            <button onClick={() => setCurrentView('raised-activity')} className="transition-colors hover:text-ink">
               Raised Activity
             </button>
-            <button
-              onClick={() => setCurrentView('payments')}
-              className="hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
-            >
+            <button onClick={() => setCurrentView('payments')} className="transition-colors hover:text-ink">
               Payments
             </button>
-            <button
-              onClick={() => setCurrentView('help')}
-              className="hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
-            >
+            <button onClick={() => setCurrentView('help')} className="transition-colors hover:text-ink">
               Support Desk
             </button>
           </div>
 
-          <div className="text-xs font-mono text-stone-400 dark:text-stone-500 text-left md:text-right">
-            <div>Connected to Admin & Employee Portals</div>
+          <div className="text-left text-xs uppercase tracking-[0.14em] text-faint md:text-right">
+            <div>Connected to Admin &amp; Employee Portals</div>
             <div className="mt-0.5">© 2026 ECHO Systems Inc. All rights reserved.</div>
           </div>
         </div>

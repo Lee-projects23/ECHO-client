@@ -1,6 +1,7 @@
 import React from 'react';
-import { ArrowRight, Clock, ShieldCheck, ArrowUpRight, Plus } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Plus } from 'lucide-react';
 import { useEcho } from '../../context/EchoContext';
+import { Status } from '../ui/Status';
 
 export const HomeView: React.FC = () => {
   const {
@@ -14,76 +15,57 @@ export const HomeView: React.FC = () => {
     setCurrentView,
     setSelectedActivityId,
     setSelectedMaintenanceId,
-    setSelectedInvoiceToPay,
   } = useEcho();
 
-  // Active / current work
   const currentWork = maintenance.find(m => m.status === 'In Progress') || maintenance[0];
-
-  // Open activities
   const openActivities = activities.filter(
     a => a.status !== 'Resolved' && a.status !== 'Closed'
   );
-
-  // Upcoming maintenance
   const upcomingMaintenance = maintenance.filter(m => m.status === 'Scheduled');
+  const latestPayment = payments[0];
 
-  // Recent documents list
   const recentDocs = [
     { type: 'Quotation', ref: quotations[0]?.quotationNumber, desc: quotations[0]?.description, amount: quotations[0]?.amount, date: quotations[0]?.date, target: 'bill-book' as const },
     { type: 'Invoice', ref: invoices[0]?.invoiceNumber, desc: invoices[0]?.service, amount: invoices[0]?.amount, date: invoices[0]?.date, target: 'payments' as const },
     { type: 'Bill', ref: bills[0]?.billNumber, desc: bills[0]?.service, amount: bills[0]?.amount, date: bills[0]?.date, target: 'bill-book' as const },
   ];
 
-  // Latest payment
-  const latestPayment = payments[0];
-
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
       {/* Editorial Header Greeting */}
-      <div className="pb-8 border-b border-stone-200 dark:border-stone-800">
-        <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-stone-500 dark:text-stone-400">
-          Client Workspace Overview
-        </span>
-        <h1 className="font-editorial text-3xl sm:text-5xl lg:text-6xl font-normal text-stone-900 dark:text-stone-100 tracking-tight mt-2">
+      <div className="border-b border-line pb-8">
+        <span className="section-kicker">Client Workspace Overview</span>
+        <h1 className="h-serif mt-3">
           Good Afternoon, {client.companyName.split(' ')[0]}.
         </h1>
-        <p className="text-stone-600 dark:text-stone-400 text-base sm:text-lg mt-2 font-editorial italic">
+        <p className="mt-2 font-serif text-base italic text-tint sm:text-lg">
           Here's what's happening with your sites.
         </p>
 
         {/* Quick action bar */}
-        <div className="flex flex-wrap items-center gap-3 mt-6">
-          <button
-            onClick={() => setCurrentView('raise-new-activity')}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-stone-950 text-stone-50 hover:bg-stone-800 dark:bg-stone-100 dark:text-stone-950 dark:hover:bg-stone-200 text-xs font-mono tracking-wider uppercase transition-colors cursor-pointer"
-          >
-            <Plus className="w-3.5 h-3.5" />
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          <button onClick={() => setCurrentView('raise-new-activity')} className="btn-accent">
+            <Plus className="h-3.5 w-3.5" strokeWidth={2} />
             <span>Raise Problem / Activity</span>
           </button>
-          <button
-            onClick={() => setCurrentView('payments')}
-            className="inline-flex items-center gap-2 px-4 py-2 border border-stone-300 dark:border-stone-700 hover:border-stone-900 dark:hover:border-stone-200 text-xs font-mono tracking-wider uppercase text-stone-800 dark:text-stone-200 transition-colors cursor-pointer"
-          >
+          <button onClick={() => setCurrentView('payments')} className="btn-secondary">
             <span>Review Outstanding Invoices</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
           </button>
         </div>
       </div>
 
       {/* Grid of Sections */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 mt-10">
-        {/* Left Column: Live Operations (Current Work + Open Activities) */}
-        <div className="lg:col-span-7 space-y-10 sm:space-y-12">
+      <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-12 sm:gap-12">
+        {/* Left Column: Live Operations */}
+        <div className="space-y-10 lg:col-span-7 sm:space-y-12">
           {/* SECTION 1: Current Work */}
-          <div>
-            <div className="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-800">
-              <h2 className="text-xs font-mono uppercase tracking-widest text-stone-500 dark:text-stone-400">
-                01. Current Work
-              </h2>
+          <section>
+            <div className="flex items-center justify-between border-b border-line pb-3">
+              <span className="section-kicker">01. Current Work</span>
               <button
                 onClick={() => setCurrentView('maintenance')}
-                className="text-xs font-mono text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100 uppercase tracking-wider transition-colors cursor-pointer"
+                className="text-[11px] font-semibold uppercase tracking-[0.18em] text-faint transition-colors hover:text-accent"
               >
                 All Maintenance →
               </button>
@@ -95,61 +77,50 @@ export const HomeView: React.FC = () => {
                   setSelectedMaintenanceId(currentWork.maintenance_id);
                   setCurrentView('maintenance-detail');
                 }}
-                className="mt-4 p-6 border border-stone-200 dark:border-stone-800 hover:border-stone-400 dark:hover:border-stone-600 transition-all cursor-pointer bg-white/40 dark:bg-stone-900/30 group"
+                className="group mt-4 cursor-pointer overflow-hidden rounded-2xl bg-hero p-6 transition-colors dark:bg-surface"
               >
                 <div className="flex items-baseline justify-between gap-4">
-                  <span className="text-xs font-mono tracking-wider text-stone-500 dark:text-stone-400 uppercase">
-                    {currentWork.siteName}
-                  </span>
-                  <div className="flex items-center gap-1.5 text-xs font-mono text-emerald-700 dark:text-emerald-400">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-ping" />
-                    <span>{currentWork.status}</span>
-                  </div>
+                  <span className="label-overline">{currentWork.siteName}</span>
+                  <Status status={currentWork.status} dot />
                 </div>
-
-                <h3 className="font-editorial text-2xl font-normal text-stone-900 dark:text-stone-100 mt-2 group-hover:underline">
+                <h3 className="mt-2 font-serif text-2xl leading-snug text-ink transition-opacity group-hover:opacity-80">
                   {currentWork.maintenanceType}
                 </h3>
-                <p className="text-xs text-stone-600 dark:text-stone-400 mt-2 line-clamp-2 leading-relaxed font-sans">
+                <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-tint">
                   {currentWork.description}
                 </p>
-
-                <div className="mt-4 pt-4 border-t border-stone-200/80 dark:border-stone-800/80 flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-stone-500 dark:text-stone-400">
+                <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-line pt-4 text-xs text-faint">
                   <div>
                     <span>Assigned Specialist: </span>
-                    <strong className="text-stone-800 dark:text-stone-200 font-medium">
-                      {currentWork.employeeName}
-                    </strong>
+                    <strong className="font-medium text-ink">{currentWork.employeeName}</strong>
                   </div>
-                  <div>
-                    <span>Scheduled: {currentWork.time}, {currentWork.date}</span>
+                  <div className="font-mono-numbers">
+                    Scheduled: {currentWork.time}, {currentWork.date}
                   </div>
                 </div>
               </div>
             ) : (
-              <div className="mt-4 p-8 border border-stone-200 dark:border-stone-800 text-center font-mono text-xs text-stone-500">
+              <div className="mt-4 rounded-2xl border border-dashed border-line p-8 text-center text-xs font-semibold uppercase tracking-[0.18em] text-faint">
                 No active maintenance currently running.
               </div>
             )}
-          </div>
+          </section>
 
           {/* SECTION 2: Open Activities (Complaints) */}
-          <div>
-            <div className="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-800">
-              <h2 className="text-xs font-mono uppercase tracking-widest text-stone-500 dark:text-stone-400">
-                02. Open Activities
-              </h2>
+          <section>
+            <div className="flex items-center justify-between border-b border-line pb-3">
+              <span className="section-kicker">02. Open Activities</span>
               <button
                 onClick={() => setCurrentView('raised-activity')}
-                className="text-xs font-mono text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100 uppercase tracking-wider transition-colors cursor-pointer"
+                className="text-[11px] font-semibold uppercase tracking-[0.18em] text-faint transition-colors hover:text-accent"
               >
                 Track Tickets →
               </button>
             </div>
 
-            <div className="mt-4 divide-y divide-stone-200 dark:divide-stone-800 border border-stone-200 dark:border-stone-800 bg-white/40 dark:bg-stone-900/30">
+            <div className="mt-4 divide-y divide-line rounded-2xl border border-line bg-raise">
               {openActivities.length === 0 ? (
-                <div className="p-8 text-center text-xs font-mono text-stone-500">
+                <div className="p-8 text-center text-xs font-semibold uppercase tracking-[0.18em] text-faint">
                   No active problems raised. Everything is running smoothly.
                 </div>
               ) : (
@@ -160,54 +131,43 @@ export const HomeView: React.FC = () => {
                       setSelectedActivityId(act.code);
                       setCurrentView('activity-detail');
                     }}
-                    className="p-5 hover:bg-stone-100/50 dark:hover:bg-stone-800/40 transition-colors cursor-pointer group"
+                    className="group cursor-pointer p-5 transition-colors hover:bg-tray"
                   >
-                    <div className="flex items-baseline justify-between gap-2">
+                    <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs font-semibold text-stone-900 dark:text-stone-100 tracking-wider">
-                          {act.code}
-                        </span>
-                        <span className="text-stone-400 text-xs">·</span>
-                        <span className="text-xs font-mono text-stone-500 dark:text-stone-400 uppercase">
-                          {act.siteName}
-                        </span>
+                        <span className="font-mono-numbers text-xs font-semibold text-ink">{act.code}</span>
+                        <span className="text-xs text-faint">·</span>
+                        <span className="label-overline">{act.siteName}</span>
                       </div>
-                      <span className="text-xs font-mono px-2 py-0.5 border border-stone-300 dark:border-stone-700 text-stone-700 dark:text-stone-300">
-                        {act.status}
-                      </span>
+                      <Status status={act.status} />
                     </div>
-
-                    <h4 className="font-editorial text-lg text-stone-900 dark:text-stone-100 mt-1.5 group-hover:underline">
+                    <h4 className="mt-1.5 font-serif text-lg text-ink transition-opacity group-hover:opacity-80">
                       {act.problem}
                     </h4>
-
-                    <p className="text-xs text-stone-500 dark:text-stone-400 font-sans line-clamp-1 mt-1">
-                      {act.description}
-                    </p>
-
-                    <div className="mt-3 flex items-center justify-between text-[11px] font-mono text-stone-400">
-                      <span>Logged: {act.date} at {act.time}</span>
-                      <span className="text-stone-700 dark:text-stone-300 group-hover:underline flex items-center gap-1">
-                        View status timeline <ArrowRight className="w-3 h-3" />
+                    <p className="mt-1 line-clamp-1 text-xs text-faint">{act.description}</p>
+                    <div className="mt-3 flex items-center justify-between text-[11px] font-semibold uppercase tracking-[0.14em] text-faint">
+                      <span className="font-mono-numbers normal-case tracking-normal">
+                        Logged: {act.date} at {act.time}
+                      </span>
+                      <span className="flex items-center gap-1 text-tint transition-colors group-hover:text-accent">
+                        View status timeline <ArrowRight className="h-3 w-3" strokeWidth={1.75} />
                       </span>
                     </div>
                   </div>
                 ))
               )}
             </div>
-          </div>
+          </section>
 
           {/* SECTION 3: Upcoming Maintenance */}
-          <div>
-            <div className="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-800">
-              <h2 className="text-xs font-mono uppercase tracking-widest text-stone-500 dark:text-stone-400">
-                03. Upcoming Scheduled Maintenance
-              </h2>
+          <section>
+            <div className="border-b border-line pb-3">
+              <span className="section-kicker">03. Upcoming Scheduled Maintenance</span>
             </div>
 
-            <div className="mt-4 border border-stone-200 dark:border-stone-800 divide-y divide-stone-200 dark:divide-stone-800 bg-white/40 dark:bg-stone-900/30">
+            <div className="mt-4 divide-y divide-line rounded-2xl border border-line bg-raise">
               {upcomingMaintenance.length === 0 ? (
-                <div className="p-6 text-center text-xs font-mono text-stone-500">
+                <div className="p-6 text-center text-xs font-semibold uppercase tracking-[0.18em] text-faint">
                   No upcoming maintenance scheduled for the next 7 days.
                 </div>
               ) : (
@@ -218,83 +178,73 @@ export const HomeView: React.FC = () => {
                       setSelectedMaintenanceId(m.maintenance_id);
                       setCurrentView('maintenance-detail');
                     }}
-                    className="p-5 hover:bg-stone-100/50 dark:hover:bg-stone-800/40 transition-colors cursor-pointer"
+                    className="cursor-pointer p-5 transition-colors hover:bg-tray"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-mono uppercase tracking-wider text-stone-500 dark:text-stone-400">
-                        {m.siteName}
-                      </span>
-                      <span className="text-xs font-mono text-stone-700 dark:text-stone-300">
+                      <span className="label-overline">{m.siteName}</span>
+                      <span className="font-mono-numbers text-xs text-tint">
                         {m.date} · {m.time}
                       </span>
                     </div>
-                    <h4 className="font-editorial text-lg text-stone-900 dark:text-stone-100 mt-1">
+                    <h4 className="mt-1 font-serif text-lg text-ink transition-opacity hover:opacity-80">
                       {m.maintenanceType}
                     </h4>
-                    <p className="text-xs text-stone-500 dark:text-stone-400 font-sans mt-0.5">
+                    <p className="mt-0.5 text-xs text-faint">
                       Assigned: {m.employeeName} ({m.employeeRole})
                     </p>
                   </div>
                 ))
               )}
             </div>
-          </div>
+          </section>
         </div>
 
         {/* Right Column: Financial & Administrative Activity */}
-        <div className="lg:col-span-5 space-y-10 sm:space-y-12">
+        <div className="space-y-10 lg:col-span-5 sm:space-y-12">
           {/* SECTION 4: Recent Documents */}
-          <div>
-            <div className="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-800">
-              <h2 className="text-xs font-mono uppercase tracking-widest text-stone-500 dark:text-stone-400">
-                04. Recent Documents
-              </h2>
+          <section>
+            <div className="flex items-center justify-between border-b border-line pb-3">
+              <span className="section-kicker">04. Recent Documents</span>
               <button
                 onClick={() => setCurrentView('bill-book')}
-                className="text-xs font-mono text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100 uppercase tracking-wider transition-colors cursor-pointer"
+                className="text-[11px] font-semibold uppercase tracking-[0.18em] text-faint transition-colors hover:text-accent"
               >
                 Bill Book →
               </button>
             </div>
 
-            <div className="mt-4 border border-stone-200 dark:border-stone-800 divide-y divide-stone-200 dark:divide-stone-800 bg-white/40 dark:bg-stone-900/30">
+            <div className="mt-4 divide-y divide-line rounded-2xl border border-line bg-raise">
               {recentDocs.map((doc, idx) => (
                 <div
                   key={idx}
                   onClick={() => setCurrentView(doc.target)}
-                  className="p-4 hover:bg-stone-100/50 dark:hover:bg-stone-800/40 transition-colors cursor-pointer group"
+                  className="group cursor-pointer p-4 transition-colors hover:bg-tray"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono tracking-widest uppercase text-stone-500 dark:text-stone-400 border border-stone-300 dark:border-stone-700 px-1.5 py-0.5">
-                      {doc.type}
-                    </span>
-                    <span className="text-xs font-mono-numbers text-stone-900 dark:text-stone-100 font-semibold">
+                    <span className="label-overline">{doc.type}</span>
+                    <span className="font-mono-numbers text-sm font-semibold text-ink">
                       ₹{doc.amount?.toLocaleString('en-IN')}
                     </span>
                   </div>
-                  <h4 className="text-xs font-medium text-stone-900 dark:text-stone-100 mt-2 font-mono group-hover:underline">
+                  <h4 className="mt-2 font-mono-numbers text-xs font-medium text-ink transition-opacity group-hover:opacity-80">
                     {doc.ref}
                   </h4>
-                  <p className="text-xs text-stone-500 dark:text-stone-400 font-sans line-clamp-1 mt-0.5">
-                    {doc.desc}
-                  </p>
-                  <div className="text-[10px] font-mono text-stone-400 mt-2">
+                  <p className="mt-0.5 line-clamp-1 text-xs text-faint">{doc.desc}</p>
+                  <div className="mt-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-faint">
                     Date: {doc.date}
                   </div>
                 </div>
               ))}
             </div>
-          </div>
+          </section>
 
           {/* SECTION 5: Recent Payments */}
-          <div>
-            <div className="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-800">
-              <h2 className="text-xs font-mono uppercase tracking-widest text-stone-500 dark:text-stone-400">
-                05. Recent Payments
-              </h2>
+          <section>
+            <div className="flex items-center justify-between border-b border-line pb-3">
+              <span className="section-kicker">05. Recent Payments</span>
               <button
                 onClick={() => setCurrentView('payments')}
-                className="text-xs font-mono text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100 uppercase tracking-wider transition-colors cursor-pointer"
+                className="text-[11px] font-semibold uppercase tracking-[0.18em] text-faint transition-colors hover:text-accent"
               >
                 Payment Ledger →
               </button>
@@ -303,43 +253,36 @@ export const HomeView: React.FC = () => {
             {latestPayment ? (
               <div
                 onClick={() => setCurrentView('payments')}
-                className="mt-4 p-5 border border-stone-200 dark:border-stone-800 bg-white/40 dark:bg-stone-900/30 hover:border-stone-400 dark:hover:border-stone-600 transition-colors cursor-pointer"
+                className="mt-4 cursor-pointer rounded-2xl border border-line bg-raise p-5 transition-all hover:border-linestrong anim-fade"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
-                    <ShieldCheck className="w-3.5 h-3.5" />
+                  <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                    <ShieldCheck className="h-3.5 w-3.5" strokeWidth={1.75} />
                     <span>Settlement Confirmed</span>
                   </span>
-                  <span className="text-xs font-mono text-stone-500">
-                    {latestPayment.date}
-                  </span>
+                  <span className="font-mono-numbers text-xs text-faint">{latestPayment.date}</span>
                 </div>
-
-                <div className="mt-3">
-                  <div className="text-2xl font-mono-numbers font-medium text-stone-900 dark:text-stone-100">
-                    ₹{latestPayment.amount.toLocaleString('en-IN')}
-                  </div>
-                  <div className="text-xs font-mono text-stone-600 dark:text-stone-400 mt-1">
-                    Invoice Ref: {latestPayment.invoiceNumber}
-                  </div>
-                  <div className="text-[11px] font-mono text-stone-500 mt-0.5">
-                    Txn ID: {latestPayment.transactionId} · {latestPayment.method}
-                  </div>
+                <div className="mt-3 font-mono-numbers text-2xl font-medium text-ink">
+                  ₹{latestPayment.amount.toLocaleString('en-IN')}
+                </div>
+                <div className="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-tint">
+                  Invoice Ref: {latestPayment.invoiceNumber}
+                </div>
+                <div className="mt-0.5 font-mono-numbers text-[11px] text-faint">
+                  Txn ID: {latestPayment.transactionId} · {latestPayment.method}
                 </div>
               </div>
             ) : (
-              <div className="mt-4 p-6 border border-stone-200 dark:border-stone-800 text-center font-mono text-xs text-stone-500">
+              <div className="mt-4 rounded-2xl border border-dashed border-line p-6 text-center text-xs font-semibold uppercase tracking-[0.18em] text-faint">
                 No payment records yet.
               </div>
             )}
-          </div>
+          </section>
 
           {/* Connected Portals Architecture Note */}
-          <div className="p-5 border border-stone-200 dark:border-stone-800 bg-stone-100/50 dark:bg-stone-950/40 text-xs font-mono text-stone-500 dark:text-stone-400 space-y-2">
-            <div className="uppercase tracking-widest text-[10px] text-stone-700 dark:text-stone-300 font-semibold">
-              ECHO Interconnected Ops
-            </div>
-            <p className="font-sans leading-relaxed text-xs">
+          <div className="gradient-accent rounded-2xl border border-line p-5 text-xs leading-relaxed text-tint">
+            <div className="label-eyebrow text-ink">ECHO Interconnected Ops</div>
+            <p className="mt-2 leading-relaxed">
               Actions requested here sync automatically with ECHO Admin dispatch and on-site Employee field terminals in real time.
             </p>
           </div>

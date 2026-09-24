@@ -53,7 +53,6 @@ export const GlobalSearchModal: React.FC = () => {
 
     const hits: SearchResult[] = [];
 
-    // Registered Sites
     client.registeredSites.forEach(s => {
       if (s.name.toLowerCase().includes(q) || s.address.toLowerCase().includes(q)) {
         hits.push({
@@ -66,7 +65,6 @@ export const GlobalSearchModal: React.FC = () => {
       }
     });
 
-    // Activities
     activities.forEach(a => {
       if (
         a.code.toLowerCase().includes(q) ||
@@ -85,7 +83,6 @@ export const GlobalSearchModal: React.FC = () => {
       }
     });
 
-    // Maintenance
     maintenance.forEach(m => {
       if (
         m.maintenance_id.toLowerCase().includes(q) ||
@@ -104,7 +101,6 @@ export const GlobalSearchModal: React.FC = () => {
       }
     });
 
-    // Invoices
     invoices.forEach(inv => {
       if (
         inv.invoiceNumber.toLowerCase().includes(q) ||
@@ -120,7 +116,6 @@ export const GlobalSearchModal: React.FC = () => {
       }
     });
 
-    // Quotations
     quotations.forEach(quo => {
       if (
         quo.quotationNumber.toLowerCase().includes(q) ||
@@ -136,7 +131,6 @@ export const GlobalSearchModal: React.FC = () => {
       }
     });
 
-    // Bills
     bills.forEach(b => {
       if (b.billNumber.toLowerCase().includes(q) || b.service.toLowerCase().includes(q)) {
         hits.push({
@@ -149,7 +143,6 @@ export const GlobalSearchModal: React.FC = () => {
       }
     });
 
-    // Payments
     payments.forEach(p => {
       if (p.transactionId.toLowerCase().includes(q) || p.invoiceNumber.toLowerCase().includes(q)) {
         hits.push({
@@ -162,7 +155,6 @@ export const GlobalSearchModal: React.FC = () => {
       }
     });
 
-    // Documents
     documents.forEach(d => {
       if (d.title.toLowerCase().includes(q) || d.referenceNo.toLowerCase().includes(q)) {
         hits.push({
@@ -175,7 +167,6 @@ export const GlobalSearchModal: React.FC = () => {
       }
     });
 
-    // Group chat conversations
     chatGroups.forEach(grp => {
       if (grp.name.toLowerCase().includes(q) || grp.siteName.toLowerCase().includes(q)) {
         hits.push({
@@ -223,44 +214,42 @@ export const GlobalSearchModal: React.FC = () => {
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto p-4 sm:p-6 md:p-20">
-      {/* Backdrop */}
       <div
         onClick={() => setIsSearchOpen(false)}
-        className="fixed inset-0 bg-stone-900/60 dark:bg-black/80 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-black/55 backdrop-blur-sm anim-fade"
       />
 
-      <div className="relative max-w-2xl mx-auto bg-[#FAF8F5] dark:bg-[#111111] text-stone-900 dark:text-stone-100 border border-stone-300 dark:border-stone-800 shadow-2xl overflow-hidden mt-12 sm:mt-16">
+      <div className="relative mx-auto mt-12 max-w-2xl overflow-hidden rounded-2xl border border-line bg-tray text-ink shadow-2xl anim-pop sm:mt-16">
         {/* Search Input Bar */}
-        <div className="flex items-center px-4 py-3.5 border-b border-stone-200 dark:border-stone-800">
-          <Search className="w-5 h-5 text-stone-500 stroke-[1.5] mr-3 shrink-0" />
+        <div className="flex items-center border-b border-line px-4 py-3.5 sm:px-5">
+          <Search className="mr-3 h-5 w-5 shrink-0 text-faint" strokeWidth={1.75} />
           <input
             type="text"
             value={query}
             onChange={e => setQuery(e.target.value)}
             placeholder="Search activities, maintenance, invoices, documents, sites..."
             autoFocus
-            className="w-full bg-transparent text-sm focus:outline-none placeholder:text-stone-500 dark:placeholder:text-stone-400 font-sans"
+            className="w-full bg-transparent text-sm text-ink transition-colors focus:outline-none placeholder:text-faint"
           />
           <button
             onClick={() => setIsSearchOpen(false)}
-            className="p-1 text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100"
+            className="p-1 text-faint transition-colors hover:text-ink"
+            aria-label="Close search"
           >
-            <X className="w-4 h-4" />
+            <X className="h-4 w-4" strokeWidth={1.75} />
           </button>
         </div>
 
         {/* Results List */}
-        <div className="max-h-[60vh] overflow-y-auto divide-y divide-stone-200/60 dark:divide-stone-800/60">
+        <div className="max-h-[60vh] overflow-y-auto divide-y divide-line bg-raise">
           {query.trim() === '' ? (
-            <div className="p-8 text-center text-xs font-mono text-stone-500 dark:text-stone-400">
+            <div className="p-8 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-faint">
               Type a ticket code (e.g. RA-00482), invoice number, site name, or service keyword.
             </div>
           ) : results.length === 0 ? (
-            <div className="p-8 text-center">
-              <p className="font-editorial text-lg text-stone-800 dark:text-stone-200">
-                No matching records found
-              </p>
-              <p className="text-xs font-mono text-stone-500 dark:text-stone-400 mt-1">
+            <div className="p-8 text-center anim-fade">
+              <p className="font-serif text-lg text-ink">No matching records found</p>
+              <p className="mt-1 text-xs font-semibold uppercase tracking-widest text-faint">
                 Searched strictly across your registered company files.
               </p>
             </div>
@@ -269,30 +258,27 @@ export const GlobalSearchModal: React.FC = () => {
               <div
                 key={hit.id}
                 onClick={() => handleSelectHit(hit)}
-                className="px-4 py-3 flex items-center justify-between hover:bg-stone-200/50 dark:hover:bg-stone-800/50 transition-colors cursor-pointer group"
+                className="group flex cursor-pointer items-center justify-between px-4 py-3 transition-colors hover:bg-tray sm:px-5 anim-fade"
               >
                 <div className="min-w-0 pr-4">
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-mono tracking-widest uppercase text-stone-600 dark:text-stone-400">
-                      {hit.category}
-                    </span>
-                    <span className="text-xs font-mono text-stone-400">·</span>
-                    <h5 className="text-sm font-medium text-stone-900 dark:text-stone-100 truncate">
-                      {hit.title}
-                    </h5>
+                    <span className="label-overline shrink-0">{hit.category}</span>
+                    <span className="text-xs text-faint" aria-hidden="true">·</span>
+                    <h5 className="truncate text-sm font-medium text-ink">{hit.title}</h5>
                   </div>
-                  <p className="text-xs text-stone-500 dark:text-stone-400 truncate mt-0.5 font-mono">
-                    {hit.subtitle}
-                  </p>
+                  <p className="mt-0.5 truncate text-xs text-faint">{hit.subtitle}</p>
                 </div>
-                <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-stone-900 dark:group-hover:text-stone-100 transition-colors shrink-0" />
+                <ArrowRight
+                  className="h-4 w-4 shrink-0 text-faint transition-all group-hover:translate-x-0.5 group-hover:text-accent"
+                  strokeWidth={1.75}
+                />
               </div>
             ))
           )}
         </div>
 
         {/* Footer info */}
-        <div className="px-4 py-2 bg-stone-100 dark:bg-[#0A0A0A] border-t border-stone-200 dark:border-stone-800 flex items-center justify-between text-[11px] font-mono text-stone-500 dark:text-stone-400">
+        <div className="flex items-center justify-between border-t border-line bg-tray px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-faint sm:px-5">
           <span>Client Scope: {client.companyName}</span>
           <span className="hidden sm:inline">ESC to close</span>
         </div>
