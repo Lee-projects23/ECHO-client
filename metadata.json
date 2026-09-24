@@ -1,0 +1,6 @@
+{
+  "name": "ECHO Client Portal",
+  "description": "The private workspace layer for ECHO operations: request maintenance, track activities, review evidence, communicate, and pay invoices.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
