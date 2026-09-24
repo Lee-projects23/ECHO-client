@@ -25,7 +25,7 @@ export const ActivityDetailView: React.FC = () => {
     return (
       <div className="mx-auto max-w-4xl p-12 text-center">
         <BackToHome onClick={() => setCurrentView('raised-activity')} label="Back to Raised Activity" />
-        <p className="font-serif text-xl text-ink">Activity record not found.</p>
+        <p className="text-xl text-ink">Activity record not found.</p>
       </div>
     );
   }
@@ -71,23 +71,22 @@ export const ActivityDetailView: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+    <div className="mx-auto w-full max-w-[1080px] px-5 py-10 sm:px-8 sm:py-16">
       <div className="mb-2 flex items-center justify-between">
         <BackToHome onClick={() => setCurrentView('raised-activity')} label="Back to Raised Activity" />
         <span className="font-mono-numbers text-xs text-faint">Ticket Code: {activity.code}</span>
       </div>
 
-      {/* Main Title Banner */}
-      <div className="flex flex-col justify-between gap-4 border-b border-line pb-8 md:flex-row md:items-end">
+      {/* Main Title */}
+      <div className="flex flex-col justify-between gap-5 border-b border-line pb-10 md:flex-row md:items-end">
         <div>
-          <span className="section-kicker">Activity Details &amp; Operational Pipeline</span>
-          <h1 className="h-serif mt-1">{activity.problem}</h1>
-          <p className="mt-1 text-sm text-tint">
+          <span className="section-kicker">Activity Report</span>
+          <h1 className="h-display mt-2">{activity.problem}</h1>
+          <p className="mt-3 max-w-2xl text-[15px] text-tint">
             Ticket {activity.code} · Site: {activity.siteName}
           </p>
         </div>
 
-        {/* Prominent Status Pill */}
         <div className="text-right">
           <span className="label-overline mb-1.5 block">Current Resolution Stage</span>
           <Status status={activity.status} dot />
@@ -95,69 +94,65 @@ export const ActivityDetailView: React.FC = () => {
       </div>
 
       {/* Read-only Governance Notice */}
-      <div className="my-6 flex items-center gap-3 rounded-2xl border border-line bg-tray px-4 py-3 text-xs leading-relaxed text-tint">
+      <div className="my-6 flex items-center gap-3 border-b border-line pb-8 text-xs leading-relaxed text-tint">
         <ShieldAlert className="h-4 w-4 shrink-0 text-accent" strokeWidth={1.75} />
         <span>
           Status updates &amp; technician assignments are managed by ECHO Operations. Client manipulation of statuses is restricted.
         </span>
       </div>
 
-      {/* Grid of Content */}
-      <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-12">
-        {/* Left Column: Details & Submitted Evidence */}
-        <div className="space-y-8 lg:col-span-7">
+      <div className="mt-12 grid grid-cols-1 gap-16 lg:grid-cols-12">
+        {/* Left: Information & Evidence */}
+        <div className="space-y-14 lg:col-span-7">
           {/* Activity Information */}
-          <div className="card-surface p-6">
-            <h3 className="label-eyebrow mb-4 border-b border-line pb-2">Activity Information</h3>
+          <section>
+            <h2 className="label-eyebrow border-b border-line pb-3">Activity Information</h2>
 
-            <div className="mb-4 grid grid-cols-2 gap-4 text-xs">
+            <dl className="mt-5 grid grid-cols-2 gap-x-8 gap-y-5 text-sm">
               <div>
-                <span className="label-overline block">Activity Code</span>
-                <span className="mt-0.5 block font-semibold text-ink">{activity.code}</span>
+                <dt className="label-overline">Activity Code</dt>
+                <dd className="mt-1 font-mono-numbers font-semibold text-ink">{activity.code}</dd>
               </div>
               <div>
-                <span className="label-overline block">Client Entity</span>
-                <span className="mt-0.5 block text-ink">{client.companyName}</span>
+                <dt className="label-overline">Client Entity</dt>
+                <dd className="mt-1 text-ink">{client.companyName}</dd>
               </div>
               <div>
-                <span className="label-overline block">Site Name</span>
-                <span className="mt-0.5 block text-ink">{activity.siteName}</span>
+                <dt className="label-overline">Site Name</dt>
+                <dd className="mt-1 text-ink">{activity.siteName}</dd>
               </div>
               <div>
-                <span className="label-overline block">Logged Timestamp</span>
-                <span className="mt-0.5 block font-mono-numbers text-ink">
+                <dt className="label-overline">Logged Timestamp</dt>
+                <dd className="mt-1 font-mono-numbers text-ink">
                   {activity.date} at {activity.time}
-                </span>
+                </dd>
               </div>
-            </div>
+            </dl>
 
-            <div className="mt-4 border-t border-line pt-4">
-              <span className="label-overline block">Detailed Problem Description</span>
-              <p className="mt-1 text-sm leading-relaxed text-ink">{activity.description}</p>
-            </div>
-
-            {activity.clientNotes && (
-              <div className="mt-4 border-t border-line pt-4">
-                <span className="label-overline block">Client Operational Notes</span>
-                <p className="mt-1 text-xs italic leading-relaxed text-tint">"{activity.clientNotes}"</p>
+            <dl className="mt-8 space-y-6 border-t border-line pt-6">
+              <div>
+                <dt className="label-overline">Detailed Problem Description</dt>
+                <dd className="mt-2 text-[15px] leading-relaxed text-ink">{activity.description}</dd>
               </div>
-            )}
-          </div>
+              {activity.clientNotes && (
+                <div>
+                  <dt className="label-overline">Client Operational Notes</dt>
+                  <dd className="mt-2 text-sm italic leading-relaxed text-tint">"{activity.clientNotes}"</dd>
+                </div>
+              )}
+            </dl>
+          </section>
 
-          {/* Submitted Evidence (Photos & Voice Note) */}
-          <div className="card-surface p-6">
-            <h3 className="label-eyebrow mb-4 border-b border-line pb-2">Submitted Evidence</h3>
+          {/* Submitted Evidence */}
+          <section>
+            <h2 className="label-eyebrow border-b border-line pb-3">Submitted Evidence</h2>
 
-            {/* Photos */}
-            {activity.photos && activity.photos.length > 0 ? (
-              <div className="mb-6">
-                <span className="label-overline mb-2 block">Photos ({activity.photos.length})</span>
+            {activity.photos && activity.photos.length > 0 && (
+              <div className="mt-5">
+                <span className="label-overline mb-3 block">Photos ({activity.photos.length})</span>
                 <div className="grid grid-cols-2 gap-4">
                   {activity.photos.map((url, idx) => (
-                    <div
-                      key={idx}
-                      className="aspect-4/3 overflow-hidden rounded-xl border border-line bg-tray"
-                    >
+                    <div key={idx} className="aspect-4/3 overflow-hidden rounded-2xl bg-tray">
                       <img
                         src={url}
                         alt={`Evidence ${idx + 1}`}
@@ -168,44 +163,40 @@ export const ActivityDetailView: React.FC = () => {
                   ))}
                 </div>
               </div>
-            ) : null}
+            )}
 
-            {/* Voice Note */}
-            {activity.voiceNote ? (
-              <div className="flex items-center justify-between rounded-xl border border-line bg-tray p-4">
+            {activity.voiceNote && (
+              <div className="mt-6 flex items-center justify-between gap-4 rounded-2xl bg-tray px-5 py-4">
                 <div className="flex items-center gap-3">
                   <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent/10 text-accent">
                     <Volume2 className="h-4 w-4" strokeWidth={1.75} />
                   </div>
                   <div>
-                    <span className="block text-xs font-semibold text-ink">Client Voice Memo</span>
-                    <span className="font-mono-numbers text-[10px] text-faint">
+                    <span className="block text-sm font-medium text-ink">Client Voice Memo</span>
+                    <span className="font-mono-numbers text-[11px] text-faint">
                       Duration: {activity.voiceNote.duration} · Recorded at {activity.voiceNote.recordedAt}
                     </span>
                   </div>
                 </div>
-
                 <button onClick={handleAudioPlay} className="btn-dark">
                   <Play className="h-3.5 w-3.5" strokeWidth={1.75} />
                   <span>{isPlayingAudio ? 'Playing...' : 'Play'}</span>
                 </button>
               </div>
-            ) : null}
-          </div>
+            )}
+          </section>
         </div>
 
-        {/* Right Column: Full Status Timeline */}
+        {/* Right: Status Timeline */}
         <div className="lg:col-span-5">
-          <div className="card-surface p-6">
-            <h3 className="label-eyebrow mb-6 border-b border-line pb-2">Operational Status Timeline</h3>
+          <section>
+            <h2 className="label-eyebrow border-b border-line pb-3">Operational Status Timeline</h2>
 
-            {/* Timeline Stream */}
-            <div className="relative space-y-7 pl-6 before:absolute before:bottom-2 before:left-0.5 before:top-2 before:w-px before:bg-line">
+            <div className="relative mt-6 space-y-7 pl-5 before:absolute before:bottom-2 before:left-[5px] before:top-2 before:w-px before:bg-line">
               {activity.timeline.map((evt, idx) => (
                 <div key={idx} className="relative">
-                  {/* Timeline point */}
                   <span
-                    className={`absolute -left-6 top-1 h-2 w-2 rounded-full ${
+                    className={`absolute -left-5 top-1 h-2 w-2 rounded-full ${
                       idx === activity.timeline.length - 1
                         ? 'bg-accent ring-4 ring-accent/15'
                         : 'bg-linestrong'
@@ -214,9 +205,7 @@ export const ActivityDetailView: React.FC = () => {
                   <div>
                     <span className="block font-mono-numbers text-[11px] text-faint">{evt.timestamp}</span>
                     <h4 className="mt-0.5 font-mono-numbers text-sm font-semibold text-ink">{evt.title}</h4>
-                    {evt.description && (
-                      <p className="mt-1 text-xs leading-relaxed text-tint">{evt.description}</p>
-                    )}
+                    {evt.description && <p className="mt-1 text-xs leading-relaxed text-tint">{evt.description}</p>}
                     {evt.actor && (
                       <span className="mt-1 block text-[10px] font-semibold uppercase tracking-[0.14em] text-faint">
                         Logged by: {evt.actor}
@@ -227,9 +216,8 @@ export const ActivityDetailView: React.FC = () => {
               ))}
             </div>
 
-            {/* Scheduled next steps preview if not yet closed */}
             {activity.status !== 'Closed' && (
-              <div className="mt-8 border-t border-line pt-6">
+              <div className="mt-10 border-t border-line pt-6">
                 <span className="label-overline mb-3 block">Lifecycle Progression Stages</span>
                 <div className="space-y-2">
                   {statusStages.map((stage, idx) => {
@@ -259,7 +247,7 @@ export const ActivityDetailView: React.FC = () => {
                 </div>
               </div>
             )}
-          </div>
+          </section>
         </div>
       </div>
     </div>

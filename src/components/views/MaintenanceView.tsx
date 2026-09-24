@@ -20,14 +20,14 @@ export const MaintenanceView: React.FC = () => {
   const uniqueSites = Array.from(new Set(maintenance.map(m => m.siteName)));
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+    <div className="mx-auto w-full max-w-[1180px] px-5 py-10 sm:px-8 sm:py-16">
       <BackToHome />
 
       {/* Header */}
       <div className="flex flex-col justify-between gap-4 border-b border-line pb-8 sm:flex-row sm:items-end">
         <div>
           <span className="section-kicker">Operations &amp; Field Works</span>
-          <h1 className="h-serif mt-1">Maintenance</h1>
+          <h1 className="h-display mt-1">Maintenance</h1>
           <p className="mt-1 text-sm text-tint">
             Scheduled, ongoing, and verified maintenance across your facilities.
           </p>

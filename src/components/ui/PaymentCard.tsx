@@ -12,20 +12,19 @@ interface PaymentCardProps {
 
 export const PaymentCard: React.FC<PaymentCardProps> = ({ title, subtitle, amount, status, onClick, className = '' }) => {
   return (
-    <div onClick={onClick} className={`group flex cursor-pointer gap-4 rounded-2xl border border-line bg-raise p-4.5 transition-all hover:border-linestrong anim-fade ${className}`}>
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
-        <CheckCircle2 className="h-4.5 w-4.5" strokeWidth={1.75} />
+    <div
+      onClick={onClick}
+      className={`group flex cursor-pointer items-center gap-4 py-4 transition-colors hover:bg-tray/60 anim-fade ${className}`}
+    >
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line text-tint transition-colors group-hover:border-accent/30 group-hover:text-accent">
+        <CheckCircle2 className="h-4 w-4" strokeWidth={1.75} />
       </div>
       <div className="min-w-0 flex-1">
-        <div className="flex items-center justify-between gap-3">
-          <h4 className="truncate text-sm font-medium text-ink">{title}</h4>
-          <span className="shrink-0 font-mono-numbers text-base text-ink">{amount}</span>
-        </div>
-        <div className="mt-0.5 flex items-center justify-between gap-3">
-          <span className="truncate text-[11px] text-faint">{subtitle}</span>
-          <span className="shrink-0">{status}</span>
-        </div>
+        <h4 className="truncate text-[15px] font-medium tracking-[-0.01em] text-ink">{title}</h4>
+        <div className="mt-0.5 truncate text-xs text-faint">{subtitle}</div>
       </div>
+      <span className="shrink-0 font-mono-numbers text-[15px] font-medium text-ink">{amount}</span>
+      <span className="shrink-0">{status}</span>
     </div>
   );
 };

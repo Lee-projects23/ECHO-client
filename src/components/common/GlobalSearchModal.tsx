@@ -248,7 +248,7 @@ export const GlobalSearchModal: React.FC = () => {
             </div>
           ) : results.length === 0 ? (
             <div className="p-8 text-center anim-fade">
-              <p className="font-serif text-lg text-ink">No matching records found</p>
+              <p className="text-lg font-medium tracking-[-0.01em] text-ink">No matching records found</p>
               <p className="mt-1 text-xs font-semibold uppercase tracking-widest text-faint">
                 Searched strictly across your registered company files.
               </p>

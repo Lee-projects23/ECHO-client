@@ -31,7 +31,7 @@ export const PayNowView: React.FC = () => {
     return (
       <div className="mx-auto max-w-4xl p-12 text-center">
         <BackToHome onClick={() => setCurrentView('payments')} label="Back to Payments" />
-        <p className="font-serif text-xl text-ink">No pending invoice selected for settlement.</p>
+        <p className="text-xl font-medium tracking-[-0.01em] text-ink">No pending invoice selected for settlement.</p>
       </div>
     );
   }
@@ -68,13 +68,13 @@ export const PayNowView: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+    <div className="mx-auto w-full max-w-[1180px] px-5 py-10 sm:px-8 sm:py-16">
       <BackToHome onClick={() => setCurrentView('payments')} label="Back to Payments" />
 
       {/* Header */}
       <div className="border-b border-line pb-8">
         <span className="section-kicker">In-App Financial Settlement</span>
-        <h1 className="h-serif mt-1">Settle Invoice</h1>
+        <h1 className="h-display mt-1">Settle Invoice</h1>
         <p className="mt-1 text-sm text-tint">
           Direct payment authorization for {invoice.invoiceNumber}
         </p>
@@ -85,7 +85,7 @@ export const PayNowView: React.FC = () => {
           {/* Left Column: Form & Method Selection */}
           <form onSubmit={handleInitiatePayment} className="space-y-6 md:col-span-7">
             {/* Step 1: Full vs Partial Payment */}
-            <div className="card-surface p-6">
+            <div className="border-t border-line pt-6">
               <label className="label-eyebrow mb-3 block">01. Payment Amount Option</label>
 
               <div className="mb-4 grid grid-cols-2 gap-3">
@@ -137,7 +137,7 @@ export const PayNowView: React.FC = () => {
             </div>
 
             {/* Step 2: Payment Method */}
-            <div className="card-surface p-6">
+            <div className="border-t border-line pt-6">
               <label className="label-eyebrow mb-3 block">02. Payment Channel</label>
 
               <div className="space-y-2">
@@ -331,7 +331,7 @@ export const PayNowView: React.FC = () => {
       {(gatewayStep === 'processing' || gatewayStep === 'verifying') && (
         <div className="card-surface mx-auto my-16 max-w-md p-10 text-center">
           <div className="mx-auto mb-6 h-12 w-12 animate-spin rounded-full border-2 border-line border-t-accent" />
-          <h3 className="font-serif text-2xl text-ink">
+          <h3 className="text-2xl font-medium tracking-[-0.02em] text-ink">
             {gatewayStep === 'processing' ? 'Contacting Payment Gateway' : 'Verifying Bank Authorization'}
           </h3>
           <p className="mt-2 font-mono-numbers text-xs text-faint">
@@ -350,7 +350,7 @@ export const PayNowView: React.FC = () => {
             <CheckCircle2 className="h-8 w-8" strokeWidth={1.5} />
           </div>
 
-          <h2 className="font-serif text-3xl text-ink">Payment Successful</h2>
+          <h2 className="text-3xl font-medium tracking-[-0.02em] text-ink">Payment Successful</h2>
           <p className="mt-1 text-xs font-semibold uppercase tracking-[0.16em] text-faint">
             Settlement cleared &amp; verified on ECHO treasury core.
           </p>
@@ -411,7 +411,7 @@ export const PayNowView: React.FC = () => {
             <AlertOctagon className="h-8 w-8" strokeWidth={1.5} />
           </div>
 
-          <h2 className="font-serif text-3xl text-ink">Payment Declined</h2>
+          <h2 className="text-3xl font-medium tracking-[-0.02em] text-ink">Payment Declined</h2>
           <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-faint">
             The issuing financial institution declined authorization.
           </p>

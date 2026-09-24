@@ -41,14 +41,14 @@ export const WorkHistoryView: React.FC = () => {
   ];
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+    <div className="mx-auto w-full max-w-[1180px] px-5 py-10 sm:px-8 sm:py-16">
       <BackToHome />
 
       {/* Header */}
       <div className="flex flex-col justify-between gap-4 border-b border-line pb-8 sm:flex-row sm:items-end">
         <div>
           <span className="section-kicker">Historical Operational Archive</span>
-          <h1 className="h-serif mt-1">Work History</h1>
+          <h1 className="h-display mt-1">Work History</h1>
           <p className="mt-1 text-sm text-tint">
             Verified completions, photographic evidence, and certified work orders.
           </p>
@@ -133,7 +133,7 @@ export const WorkHistoryView: React.FC = () => {
                 </div>
                 <div className="p-4">
                   <span className="label-overline block">{photo.category} · {photo.site}</span>
-                  <h4 className="mt-1 font-serif text-lg leading-snug text-ink">{photo.title}</h4>
+                  <h4 className="mt-1 text-lg font-medium tracking-[-0.01em] text-ink">{photo.title}</h4>
                   <div className="mt-3 flex items-center justify-between border-t border-line pt-2 text-xs text-faint">
                     <span className="font-mono-numbers">{photo.date}</span>
                     <a

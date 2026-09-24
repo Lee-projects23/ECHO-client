@@ -13,20 +13,20 @@ export const HelpView: React.FC = () => {
   ];
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+    <div className="mx-auto w-full max-w-[1180px] px-5 py-10 sm:px-8 sm:py-16">
       <BackToHome />
 
       {/* Header */}
       <div className="border-b border-line pb-8">
         <span className="section-kicker">Client Operations Support &amp; Protocols</span>
-        <h1 className="h-serif mt-1">Help &amp; Operational SLAs</h1>
+        <h1 className="h-display mt-1">Help &amp; Operational SLAs</h1>
         <p className="mt-1 text-sm text-tint">
           ECHO tri-layer protocols, response timelines, and emergency dispatch contact channels.
         </p>
       </div>
 
       {/* Tri-Layer Architecture Overview */}
-      <div className="card-surface my-8 space-y-4 p-6">
+      <div className="my-12 space-y-4">
         <h3 className="label-eyebrow">The ECHO Tri-Layer System</h3>
         <p className="text-sm leading-relaxed text-tint">
           ECHO operates as a synchronized ecosystem designed for precision estate and facility management:
@@ -60,7 +60,7 @@ export const HelpView: React.FC = () => {
       </div>
 
       {/* SLA Guidelines */}
-      <div className="card-surface my-8 p-6">
+      <div className="my-12">
         <h3 className="label-eyebrow mb-4 border-b border-line pb-2">
           Service Level Agreement (SLA) Matrix
         </h3>
@@ -87,7 +87,7 @@ export const HelpView: React.FC = () => {
       </div>
 
       {/* Emergency Dispatch Desk */}
-      <div className="card-surface my-8 p-6">
+      <div className="my-12">
         <h3 className="label-eyebrow mb-4 border-b border-line pb-2">Emergency Operations Desk</h3>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

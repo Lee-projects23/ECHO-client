@@ -26,30 +26,30 @@ export const PaymentsView: React.FC = () => {
   const outstandingInvoices = invoices.filter(inv => inv.balance > 0);
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+    <div className="mx-auto w-full max-w-[1180px] px-5 py-10 sm:px-8 sm:py-16">
       <BackToHome />
 
       {/* Header */}
       <div className="border-b border-line pb-8">
         <span className="section-kicker">Financial Settlements &amp; In-App Payments</span>
-        <h1 className="h-serif mt-1">Payments</h1>
+        <h1 className="h-display mt-1">Payments</h1>
         <p className="mt-1 text-sm text-tint">
           Direct digital settlement, outstanding obligations, and verified transaction receipts.
         </p>
       </div>
 
       {/* Summary Metrics */}
-      <div className="mt-8 grid grid-cols-2 overflow-hidden rounded-3xl border border-line md:grid-cols-4">
-        <div className="border-r border-line bg-tray">
+      <div className="mt-8 grid grid-cols-2 gap-y-6 border-y border-line py-6 md:grid-cols-4">
+        <div className="md:border-r md:border-line">
           <Metric label="Total Due" value={`₹${totalDue.toLocaleString('en-IN')}`} sub="Current balance payable" />
         </div>
-        <div className="border-r border-line bg-tray">
+        <div className="md:border-r md:border-line">
           <Metric label="Paid" value={`₹${totalPaid.toLocaleString('en-IN')}`} sub="Settled transactions" tone="success" />
         </div>
-        <div className="border-r border-line bg-tray">
+        <div className="md:border-r md:border-line">
           <Metric label="Pending" value={String(pendingCount)} sub="Invoices awaiting payment" tone="warning" />
         </div>
-        <div className="bg-tray">
+        <div className="md:pl-6">
           <Metric label="Overdue" value={String(overdueCount)} sub="Past grace timeline" tone="danger" />
         </div>
       </div>

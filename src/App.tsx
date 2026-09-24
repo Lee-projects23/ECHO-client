@@ -78,7 +78,7 @@ const PortalMainContent: React.FC = () => {
 
       {/* Restrained Editorial Footer */}
       <footer className="mt-20 border-t border-line bg-page px-4 py-12 transition-colors sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-6xl flex-col items-baseline justify-between gap-6 md:flex-row">
+        <div className="mx-auto flex max-w-[1180px] flex-col items-baseline justify-between gap-6 md:flex-row">
           <div>
             <span className="font-serif text-2xl tracking-wide uppercase text-ink">ECHO</span>
             <p className="mt-1 text-xs uppercase tracking-[0.18em] text-faint">

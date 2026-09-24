@@ -28,13 +28,13 @@ export const DocumentsView: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+    <div className="mx-auto w-full max-w-[1180px] px-5 py-10 sm:px-8 sm:py-16">
       <BackToHome />
 
       {/* Header */}
       <div className="border-b border-line pb-8">
         <span className="section-kicker">Digital Document Vault</span>
-        <h1 className="h-serif mt-1">Documents</h1>
+        <h1 className="h-display mt-1">Documents</h1>
         <p className="mt-1 text-sm text-tint">
           Official quotations, invoices, service level agreements, audit reports, and payment receipts.
         </p>
@@ -145,7 +145,7 @@ export const DocumentsView: React.FC = () => {
             <div className="flex items-center justify-between border-b border-line pb-4">
               <div>
                 <span className="label-overline">Document Inspection</span>
-                <h3 className="mt-0.5 font-serif text-2xl text-ink">{selectedDocPreview.title}</h3>
+                <h3 className="mt-0.5 text-2xl font-medium tracking-[-0.02em] text-ink">{selectedDocPreview.title}</h3>
               </div>
               <span className="rounded-full border border-line px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-faint">
                 {selectedDocPreview.type}

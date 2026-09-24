@@ -67,9 +67,9 @@ export const Status: React.FC<StatusProps> = ({ status, tone, dot = true, classN
   const t = tone || toneFor(status);
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium ring-1 ring-inset whitespace-nowrap ${TONE_STYLES[t]} ${className}`}
+      className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] ring-1 ring-inset ${TONE_STYLES[t]} ${className}`}
     >
-      {dot && <span className="h-1.5 w-1.5 rounded-full bg-current opacity-70" />}
+      {dot && <span className="h-1 w-1 rounded-full bg-current opacity-60" />}
       {status}
     </span>
   );

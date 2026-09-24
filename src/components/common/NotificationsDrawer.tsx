@@ -46,7 +46,7 @@ export const NotificationsDrawer: React.FC = () => {
           <div className="border-b border-line p-6">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="font-serif text-2xl tracking-wide text-ink">Notifications</h3>
+                <h3 className="text-2xl font-medium tracking-[-0.02em] text-ink">Notifications</h3>
                 <p className="mt-0.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-faint">
                   {unreadCount > 0 ? `${unreadCount} unread operational updates` : 'All caught up'}
                 </p>
@@ -78,7 +78,7 @@ export const NotificationsDrawer: React.FC = () => {
           <div className="flex-1 overflow-y-auto divide-y divide-line">
             {notifications.length === 0 ? (
               <div className="p-12 text-center">
-                <p className="font-serif text-lg text-ink">No notifications yet.</p>
+                <p className="text-lg font-medium tracking-[-0.01em] text-ink">No notifications yet.</p>
                 <p className="mt-1 text-xs font-semibold uppercase tracking-widest text-faint">
                   Updates regarding activities, payments, and maintenance will appear here.
                 </p>

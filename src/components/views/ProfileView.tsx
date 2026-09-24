@@ -7,13 +7,13 @@ export const ProfileView: React.FC = () => {
   const { client } = useEcho();
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+    <div className="mx-auto w-full max-w-[1180px] px-5 py-10 sm:px-8 sm:py-16">
       <BackToHome />
 
       {/* Header */}
       <div className="border-b border-line pb-8">
         <span className="section-kicker">Account Profile &amp; Entity Records</span>
-        <h1 className="h-serif mt-1">Profile Settings</h1>
+        <h1 className="h-display mt-1">Profile Settings</h1>
         <p className="mt-1 text-sm text-tint">
           Corporate entity identification, tax credentials, and authorized estate facilities.
         </p>
@@ -28,7 +28,7 @@ export const ProfileView: React.FC = () => {
       </div>
 
       {/* Profile Card */}
-      <div className="card-surface mt-6 space-y-8 p-6 sm:p-8">
+      <div className="mt-6 space-y-10">
         {/* Photo and Primary Identity */}
         <div className="flex flex-col items-start gap-6 border-b border-line pb-6 sm:flex-row sm:items-center">
           <div className="h-20 w-20 shrink-0 overflow-hidden rounded-full border border-line bg-tray">
@@ -42,7 +42,7 @@ export const ProfileView: React.FC = () => {
 
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="font-serif text-2xl text-ink">{client.name}</h2>
+              <h2 className="text-2xl font-medium tracking-[-0.02em] text-ink">{client.name}</h2>
               <span className="rounded-full border border-line px-2 py-0.5 font-mono-numbers text-[10px] uppercase tracking-wider text-faint">
                 Authorized Signatory
               </span>
@@ -99,11 +99,11 @@ export const ProfileView: React.FC = () => {
         <div className="border-t border-line pt-6">
           <h3 className="label-eyebrow mb-4">Registered Client Sites &amp; Facilities ({client.registeredSites.length})</h3>
 
-          <div className="space-y-3">
+          <div className="divide-y divide-line border-y border-line">
             {client.registeredSites.map((site, idx) => (
               <div
                 key={site.site_id}
-                className="flex flex-col justify-between gap-2 rounded-2xl border border-line bg-tray px-5 py-4 sm:flex-row sm:items-center"
+                className="flex flex-col justify-between gap-2 px-1 py-5 sm:flex-row sm:items-center"
               >
                 <div>
                   <div className="flex items-center gap-2.5">

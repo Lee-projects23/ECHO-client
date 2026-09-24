@@ -30,7 +30,7 @@ export const MaintenanceRow: React.FC<MaintenanceRowProps> = ({
         <div className="flex min-w-0 items-center gap-2.5">
           <span className="label-overline shrink-0 text-faint">{id}</span>
           <span className="label-overline shrink-0 text-accent">{priority}</span>
-          <h4 className="truncate font-serif text-lg leading-snug text-ink">{title}</h4>
+          <h4 className="truncate text-[15px] font-medium tracking-[-0.01em] text-ink">{title}</h4>
         </div>
         <div className="shrink-0">{status}</div>
       </div>

@@ -20,15 +20,15 @@ interface MetricProps {
 
 export const Metric: React.FC<MetricProps> = ({ label, value, sub, tone = 'default', className = '' }) => {
   return (
-    <div className={`px-5 py-6 sm:px-7 ${className}`}>
+    <div className={`py-5 ${className}`}>
       <div className="label-overline">{label}</div>
       <div
-        className={`mt-2.5 font-serif text-3xl sm:text-4xl leading-none tracking-tight ${VALUE_TONES[tone]}`}
+        className={`mt-2 text-[30px] font-medium leading-none tracking-[-0.03em] ${VALUE_TONES[tone]}`}
         style={{ fontVariantNumeric: 'tabular-nums' }}
       >
         {value}
       </div>
-      {sub && <div className="mt-2 text-[11px] text-faint leading-relaxed">{sub}</div>}
+      {sub && <div className="mt-2 text-[11px] leading-relaxed text-faint">{sub}</div>}
     </div>
   );
 };

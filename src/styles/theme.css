@@ -64,9 +64,14 @@
     @apply text-[11px] font-semibold uppercase tracking-[0.22em] text-tint;
   }
 
-  /* Editorial serif headline */
+  /* Primary page heading — SF Pro Display style */
+  .h-display {
+    @apply text-[32px] sm:text-[42px] leading-[1.02] tracking-[-0.035em] font-medium text-ink;
+  }
+
+  /* Editorial serif headline — reserved for hero / wordmark moments only */
   .h-serif {
-    @apply font-serif text-3xl sm:text-4xl lg:text-5xl leading-[1.04] tracking-tight text-ink;
+    @apply font-serif text-3xl sm:text-4xl lg:text-5xl leading-[1.02] tracking-tight text-ink;
   }
 
   /* Buttons */

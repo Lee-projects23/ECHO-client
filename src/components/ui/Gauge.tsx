@@ -85,7 +85,7 @@ export const Gauge: React.FC<GaugeProps> = ({
       </svg>
 
       <div className="-mt-14 text-center">
-        <div className="font-serif text-3xl sm:text-4xl leading-none text-ink" style={{ fontVariantNumeric: 'tabular-nums' }}>
+        <div className="text-[32px] font-medium leading-none tracking-[-0.03em] text-ink sm:text-4xl" style={{ fontVariantNumeric: 'tabular-nums' }}>
           {display ?? value}
         </div>
         {label && <div className="mt-1.5 label-overline">{label}</div>}

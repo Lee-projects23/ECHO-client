@@ -18,9 +18,9 @@ export const Navbar: React.FC = () => {
 
   return (
     <header className="sticky top-0 z-40 w-full">
-      <div className="mx-auto max-w-6xl px-3 sm:px-4 pt-3 sm:pt-4">
+      <div className="mx-auto max-w-[1180px] px-3 sm:px-4 pt-3 sm:pt-4">
         {/* Floating pill */}
-        <div className="relative flex items-center justify-between gap-2 rounded-full border border-none bg-tray/85 px-3 py-2 shadow-[0_8px_30px_rgba(11,15,26,0.06)] backdrop-blur-xl transition-colors duration-300 dark:shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
+        <div className="relative flex items-center justify-between gap-2 rounded-full border border-line bg-raise/85 px-3 py-2 shadow-[0_8px_30px_rgba(11,15,26,0.06)] backdrop-blur-xl transition-colors duration-300 dark:border-white/10 dark:bg-[#0d0d0d]/85 dark:shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
           {/* Left: Brand */}
           <button
             onClick={() => setCurrentView('home')}

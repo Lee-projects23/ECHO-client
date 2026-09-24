@@ -102,27 +102,27 @@ export const RaiseNewActivityView: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+    <div className="mx-auto w-full max-w-[1080px] px-5 py-10 sm:px-8 sm:py-16">
       <BackToHome onClick={() => setCurrentView('raised-activity')} label="Back to Raised Activity" />
 
-      {/* Header */}
-      <div className="border-b border-line pb-8">
+      {/* Page Header */}
+      <div className="border-b border-line pb-10">
         <span className="section-kicker">Operational Ticket Submission</span>
-        <h1 className="h-serif mt-1">Raise New Activity</h1>
-        <p className="mt-1 text-sm text-tint">
+        <h1 className="h-display mt-1">Raise New Activity</h1>
+        <p className="mt-3 max-w-xl text-[15px] text-tint">
           Report an issue or emergency maintenance need. Admin will triage and dispatch field specialists.
         </p>
       </div>
 
       {/* Main Form */}
-      <form onSubmit={handleSubmit} className="mt-8 space-y-8">
+      <form onSubmit={handleSubmit} className="mt-12 space-y-12">
         {/* Site Selection */}
-        <div className="card-surface p-6">
-          <label className="label-overline mb-2 block">Site Location *</label>
+        <section>
+          <label className="label-eyebrow mb-4 block border-b border-line pb-3">Site Location *</label>
           <select
             value={selectedSiteId}
             onChange={e => setSelectedSiteId(e.target.value)}
-            className="input-field"
+            className="input-field max-w-lg"
           >
             {client.registeredSites.map(site => (
               <option key={site.site_id} value={site.site_id}>
@@ -133,7 +133,7 @@ export const RaiseNewActivityView: React.FC = () => {
           </select>
 
           {selectedSiteId === 'custom' && (
-            <div className="mt-3 anim-fade">
+            <div className="mt-3 max-w-lg anim-fade">
               <input
                 type="text"
                 value={customSiteName}
@@ -144,48 +144,47 @@ export const RaiseNewActivityView: React.FC = () => {
               />
             </div>
           )}
-        </div>
+        </section>
 
         {/* Problem Title & Detailed Narrative */}
-        <div className="card-surface space-y-5 p-6">
+        <section className="space-y-6">
           <div>
-            <label className="label-overline mb-2 block">Problem Summary *</label>
+            <label className="label-eyebrow mb-4 block border-b border-line pb-3">Problem Summary *</label>
             <input
               type="text"
               value={problem}
               onChange={e => setProblem(e.target.value)}
               required
               placeholder="e.g. Pump malfunction, Irrigation pressure drop, Lighting short"
-              className="input-field"
+              className="input-field max-w-2xl"
             />
           </div>
 
           <div>
-            <label className="label-overline mb-2 block">Describe the Problem *</label>
+            <label className="label-eyebrow mb-4 block border-b border-line pb-3">Describe the Problem *</label>
             <textarea
               rows={4}
               value={description}
               onChange={e => setDescription(e.target.value)}
               required
               placeholder="Provide specific observations: exact location on site, when it started, water leaks, unusual noises or power trips..."
-              className="input-field resize-none"
+              className="input-field max-w-2xl resize-none"
             />
           </div>
-        </div>
+        </section>
 
         {/* Photos & Mock Camera Section */}
-        <div className="card-surface p-6">
-          <div className="mb-4 flex items-center justify-between">
+        <section>
+          <div className="mb-4 flex items-start justify-between border-b border-line pb-3">
             <div>
-              <h3 className="label-eyebrow">Photographic Evidence</h3>
-              <p className="mt-0.5 text-xs text-faint">
+              <h2 className="label-eyebrow">Photographic Evidence</h2>
+              <p className="mt-1 text-xs text-faint">
                 Upload or capture clear photos of the issue for immediate remote diagnosis.
               </p>
             </div>
             <span className="font-mono-numbers text-xs text-faint">{photos.length}/4 photos</span>
           </div>
 
-          {/* Action triggers */}
           <div className="mb-6 flex flex-wrap items-center gap-3">
             <button type="button" onClick={handleAddMockPhoto} disabled={photos.length >= 4} className="btn-secondary">
               <Camera className="h-4 w-4" strokeWidth={1.75} />
@@ -197,12 +196,11 @@ export const RaiseNewActivityView: React.FC = () => {
             </button>
           </div>
 
-          {/* Photos Preview Grid */}
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             {photos.map((url, idx) => (
               <div
                 key={idx}
-                className="group relative aspect-4/3 overflow-hidden rounded-xl border border-line bg-tray"
+                className="group relative aspect-4/3 overflow-hidden rounded-2xl bg-tray"
               >
                 <img
                   src={url}
@@ -228,21 +226,21 @@ export const RaiseNewActivityView: React.FC = () => {
               <button
                 type="button"
                 onClick={handleAddMockPhoto}
-                className="flex aspect-4/3 flex-col items-center justify-center rounded-xl border border-dashed border-line p-4 text-faint transition-colors hover:border-linestrong hover:text-tint cursor-pointer"
+                className="flex aspect-4/3 flex-col items-center justify-center rounded-2xl border border-dashed border-line p-4 text-faint transition-colors hover:border-linestrong hover:text-tint cursor-pointer"
               >
                 <Camera className="mb-1 h-5 w-5" strokeWidth={1.5} />
                 <span className="text-[11px] font-semibold uppercase tracking-wider">+ Add Photo</span>
               </button>
             )}
           </div>
-        </div>
+        </section>
 
         {/* Voice Note Section */}
-        <div className="card-surface p-6">
-          <div className="mb-4 flex items-center justify-between">
+        <section>
+          <div className="mb-4 flex items-start justify-between border-b border-line pb-3">
             <div>
-              <h3 className="label-eyebrow">Voice Memo (Field Audio Note)</h3>
-              <p className="mt-0.5 text-xs text-faint">
+              <h2 className="label-eyebrow">Voice Memo (Field Audio Note)</h2>
+              <p className="mt-1 text-xs text-faint">
                 Record sound of the malfunction or dictate an urgent briefing.
               </p>
             </div>
@@ -283,30 +281,27 @@ export const RaiseNewActivityView: React.FC = () => {
               </>
             )}
           </div>
-        </div>
+        </section>
 
         {/* Additional Notes Field */}
-        <div className="card-surface p-6">
-          <label className="label-overline mb-2 block">Additional Client Instructions (Optional)</label>
+        <section>
+          <label className="label-eyebrow mb-4 block border-b border-line pb-3">
+            Additional Client Instructions (Optional)
+          </label>
           <textarea
             rows={2}
             value={clientNotes}
             onChange={e => setClientNotes(e.target.value)}
             placeholder="e.g. Preferred entry time, security gate contact, or sensitivity with site guests..."
-            className="input-field resize-none"
+            className="input-field max-w-2xl resize-none"
           />
-        </div>
+        </section>
 
         {/* Submit Button */}
-        <div className="flex items-center justify-between pt-4">
-          <button
-            type="button"
-            onClick={() => setCurrentView('raised-activity')}
-            className="btn-ghost"
-          >
+        <div className="flex items-center justify-between">
+          <button type="button" onClick={() => setCurrentView('raised-activity')} className="btn-ghost">
             Cancel
           </button>
-
           <button type="submit" className="btn-accent px-8 py-3">
             <span>Raise Activity</span>
             <ArrowRight className="h-4 w-4" strokeWidth={1.75} />
@@ -324,7 +319,7 @@ export const RaiseNewActivityView: React.FC = () => {
               <CheckCircle className="h-6 w-6" strokeWidth={1.5} />
             </div>
 
-            <h3 className="font-serif text-2xl text-ink">Activity Raised Successfully</h3>
+            <h3 className="text-2xl font-medium tracking-[-0.02em] text-ink">Activity Raised Successfully</h3>
 
             <p className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-tint">
               Your activity code is:

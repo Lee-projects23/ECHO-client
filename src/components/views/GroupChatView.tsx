@@ -54,14 +54,14 @@ export const GroupChatView: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+    <div className="mx-auto w-full max-w-[1180px] px-5 py-10 sm:px-8 sm:py-16">
       <BackToHome />
 
       {/* Header */}
       <div className="flex flex-col justify-between gap-4 border-b border-line pb-8 sm:flex-row sm:items-end">
         <div>
           <span className="section-kicker">Tri-Party Operational Comms</span>
-          <h1 className="h-serif mt-1">Group Chat</h1>
+          <h1 className="h-display mt-1">Group Chat</h1>
           <p className="mt-1 text-sm text-tint">
             Direct operational channels uniting Client, ECHO Admin, and assigned Employees.
           </p>
@@ -123,7 +123,7 @@ export const GroupChatView: React.FC = () => {
               <div className="flex flex-col justify-between gap-3 border-b border-line bg-tray/50 px-5 py-4 sm:flex-row sm:items-center">
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="font-serif text-xl text-ink">{activeGroup.name}</h3>
+                    <h3 className="text-xl font-medium tracking-[-0.01em] text-ink">{activeGroup.name}</h3>
                     <span className="rounded-full border border-line px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-faint">
                       Active Channel
                     </span>

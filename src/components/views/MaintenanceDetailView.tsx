@@ -23,7 +23,7 @@ export const MaintenanceDetailView: React.FC = () => {
     return (
       <div className="mx-auto max-w-4xl p-12 text-center">
         <BackToHome />
-        <p className="font-serif text-xl text-ink">Maintenance record not found.</p>
+        <p className="text-xl text-ink">Maintenance record not found.</p>
       </div>
     );
   }
@@ -34,29 +34,25 @@ export const MaintenanceDetailView: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+    <div className="mx-auto w-full max-w-[1080px] px-5 py-10 sm:px-8 sm:py-16">
       <div className="mb-2 flex items-center justify-between">
         <BackToHome onClick={() => setCurrentView('maintenance')} label="Back to Maintenance" />
         <span className="font-mono-numbers text-xs text-faint">Record ID: {record.maintenance_id}</span>
       </div>
 
-      {/* Main Title Banner */}
-      <div className="flex flex-col justify-between gap-4 border-b border-line pb-8 md:flex-row md:items-end">
+      {/* Main Title */}
+      <div className="flex flex-col justify-between gap-5 border-b border-line pb-10 md:flex-row md:items-end">
         <div>
           <span className="section-kicker">Maintenance Record Inspection</span>
-          <h1 className="h-serif mt-1">{record.maintenanceType}</h1>
-          <p className="mt-1 text-sm text-tint">
+          <h1 className="h-display mt-2">{record.maintenanceType}</h1>
+          <p className="mt-3 max-w-2xl text-[15px] text-tint">
             {record.siteName} · Scheduled execution by {record.employeeName}
           </p>
         </div>
 
-        {/* Current Status Badge & Action */}
         <div className="flex flex-wrap items-center gap-3">
           <Status status={record.status} dot />
-          <button
-            onClick={handleDownloadEvidence}
-            className="btn-secondary"
-          >
+          <button onClick={handleDownloadEvidence} className="btn-secondary">
             {downloadSuccess ? (
               <>
                 <Check className="h-3.5 w-3.5 text-accent" strokeWidth={2} />
@@ -73,34 +69,31 @@ export const MaintenanceDetailView: React.FC = () => {
       </div>
 
       {/* Read-only Governance Banner */}
-      <div className="my-6 flex items-center gap-3 rounded-2xl border border-line bg-tray px-4 py-3 text-xs leading-relaxed text-tint">
+      <div className="mt-6 flex items-center gap-3 border-b border-line pb-8 text-xs leading-relaxed text-tint">
         <ShieldAlert className="h-4 w-4 shrink-0 text-accent" strokeWidth={1.75} />
         <span>
           Client View Only: Costing, assigned personnel, dates, and status verification are managed exclusively by ECHO Operations.
         </span>
       </div>
 
-      {/* Content Columns */}
-      <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-12">
-        {/* Left Column: Scope & Evidence */}
-        <div className="space-y-8 lg:col-span-8">
-          {/* Detailed Description */}
-          <div className="card-surface p-6">
-            <h3 className="label-eyebrow mb-3">Scope of Work &amp; Specification</h3>
-            <p className="text-sm leading-relaxed text-ink">{record.description}</p>
-          </div>
+      <div className="mt-12 grid grid-cols-1 gap-16 lg:grid-cols-12">
+        {/* Left: Scope, Evidence, Notes */}
+        <div className="space-y-14 lg:col-span-8">
+          {/* Scope of Work */}
+          <section>
+            <h2 className="label-eyebrow border-b border-line pb-3">Scope of Work &amp; Specification</h2>
+            <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-ink">{record.description}</p>
+          </section>
 
-          {/* Photographic Evidence Comparison */}
-          <div className="card-surface p-6">
+          {/* Photographic Evidence */}
+          <section>
             <div className="flex flex-col items-start justify-between gap-4 border-b border-line pb-4 sm:flex-row sm:items-center">
               <div>
-                <h3 className="font-serif text-2xl text-ink">Photographic Evidence</h3>
-                <p className="mt-0.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-faint">
+                <h2 className="label-eyebrow">Photographic Evidence</h2>
+                <p className="mt-1 text-xs text-faint">
                   Visual before and after comparison uploaded by assigned specialist
                 </p>
               </div>
-
-              {/* Segmented view tabs */}
               <div className="flex items-center gap-1 rounded-full border border-line bg-tray p-1">
                 {(['comparison', 'before', 'after'] as const).map(tab => (
                   <button
@@ -118,26 +111,24 @@ export const MaintenanceDetailView: React.FC = () => {
               </div>
             </div>
 
-            {/* Photo Grid */}
             <div className="mt-6">
               {record.beforePhoto || record.afterPhoto ? (
                 <div
-                  className={`grid gap-6 ${
+                  className={`grid gap-8 ${
                     activePhotoTab === 'comparison'
                       ? 'grid-cols-1 md:grid-cols-2'
-                      : 'grid-cols-1 max-w-xl mx-auto'
+                      : 'grid-cols-1 mx-auto max-w-xl'
                   }`}
                 >
-                  {/* Before Photo */}
                   {(activePhotoTab === 'comparison' || activePhotoTab === 'before') && (
-                    <div>
-                      <div className="mb-2 flex items-center justify-between">
+                    <figure>
+                      <div className="mb-2 flex items-baseline justify-between">
                         <span className="label-overline">01. Before Execution</span>
                         <span className="text-[10px] font-semibold uppercase tracking-wider text-faint">
                           Initial Inspection Condition
                         </span>
                       </div>
-                      <div className="aspect-4/3 overflow-hidden rounded-xl border border-line bg-tray">
+                      <div className="aspect-4/3 overflow-hidden rounded-2xl bg-tray">
                         {record.beforePhoto ? (
                           <img
                             src={record.beforePhoto}
@@ -151,19 +142,18 @@ export const MaintenanceDetailView: React.FC = () => {
                           </div>
                         )}
                       </div>
-                    </div>
+                    </figure>
                   )}
 
-                  {/* After Photo */}
                   {(activePhotoTab === 'comparison' || activePhotoTab === 'after') && (
-                    <div>
-                      <div className="mb-2 flex items-center justify-between">
+                    <figure>
+                      <div className="mb-2 flex items-baseline justify-between">
                         <span className="label-overline">02. After Restoration</span>
                         <span className="text-[10px] font-semibold uppercase tracking-wider text-faint">
                           Completed Quality State
                         </span>
                       </div>
-                      <div className="aspect-4/3 overflow-hidden rounded-xl border border-line bg-tray">
+                      <div className="aspect-4/3 overflow-hidden rounded-2xl bg-tray">
                         {record.afterPhoto ? (
                           <img
                             src={record.afterPhoto}
@@ -177,75 +167,71 @@ export const MaintenanceDetailView: React.FC = () => {
                           </div>
                         )}
                       </div>
-                    </div>
+                    </figure>
                   )}
                 </div>
               ) : (
-                <div className="rounded-xl border border-dashed border-line p-12 text-center text-xs font-semibold uppercase tracking-[0.18em] text-faint">
+                <div className="px-6 py-14 text-center text-xs font-semibold uppercase tracking-[0.18em] text-faint">
                   No photographic evidence uploaded yet for this scheduled work order.
                 </div>
               )}
             </div>
-          </div>
+          </section>
 
-          {/* Operational Notes */}
-          <div className="card-surface p-6">
-            <h3 className="label-eyebrow mb-3">Admin &amp; Technician Field Log Notes</h3>
-            <p className="border-l-2 border-accent bg-tray p-4 text-sm italic leading-relaxed text-tint">
+          {/* Field Notes */}
+          <section>
+            <h2 className="label-eyebrow border-b border-line pb-3">Admin &amp; Technician Field Log Notes</h2>
+            <p className="mt-5 max-w-2xl border-l border-accent pl-5 text-[15px] italic leading-relaxed text-tint">
               "{record.notes}"
             </p>
-          </div>
+          </section>
         </div>
 
-        {/* Right Column: Site & Execution Metadata */}
-        <div className="space-y-6 lg:col-span-4">
-          {/* Site Metadata Card */}
-          <div className="card-surface p-6">
-            <h3 className="label-eyebrow mb-4 border-b border-line pb-2">Site Location</h3>
-            <div className="space-y-3 text-xs">
+        {/* Right: Metadata */}
+        <div className="lg:col-span-4">
+          <section>
+            <h2 className="label-eyebrow border-b border-line pb-3">Site Location</h2>
+            <dl className="mt-5 space-y-5 text-sm">
               <div>
-                <span className="label-overline block">Client Company</span>
-                <span className="mt-0.5 block font-medium text-ink">{client.companyName}</span>
+                <dt className="label-overline">Client Company</dt>
+                <dd className="mt-1 font-medium text-ink">{client.companyName}</dd>
               </div>
               <div>
-                <span className="label-overline block">Site Name</span>
-                <span className="mt-0.5 block font-medium text-ink">{record.siteName}</span>
+                <dt className="label-overline">Site Name</dt>
+                <dd className="mt-1 font-medium text-ink">{record.siteName}</dd>
               </div>
               <div>
-                <span className="label-overline block">Registered Address</span>
-                <span className="mt-0.5 block leading-relaxed text-tint">{record.siteAddress}</span>
+                <dt className="label-overline">Registered Address</dt>
+                <dd className="mt-1 leading-relaxed text-tint">{record.siteAddress}</dd>
               </div>
-            </div>
-          </div>
+            </dl>
+          </section>
 
-          {/* Execution Metadata Card */}
-          <div className="card-surface p-6">
-            <h3 className="label-eyebrow mb-4 border-b border-line pb-2">Execution Details</h3>
-            <div className="space-y-3.5 text-xs">
+          <section className="mt-12">
+            <h2 className="label-eyebrow border-b border-line pb-3">Execution Details</h2>
+            <dl className="mt-5 space-y-5 text-sm">
               <div>
-                <span className="label-overline block">Assigned Employee</span>
-                <span className="mt-0.5 block font-medium text-ink">{record.employeeName}</span>
-                <span className="mt-0.5 block text-[11px] text-faint">
+                <dt className="label-overline">Assigned Employee</dt>
+                <dd className="mt-1 font-medium text-ink">{record.employeeName}</dd>
+                <dd className="mt-0.5 text-xs text-faint">
                   {record.employeeRole} (ID: {record.employee_id})
-                </span>
+                </dd>
               </div>
               <div>
-                <span className="label-overline block">Scheduled Date &amp; Time</span>
-                <span className="mt-0.5 block font-medium text-ink">
+                <dt className="label-overline">Scheduled Date &amp; Time</dt>
+                <dd className="mt-1 font-medium text-ink">
                   {record.date} at {record.time}
-                </span>
+                </dd>
               </div>
               <div>
-                <span className="label-overline block">Billed Service Cost</span>
-                <span className="mt-0.5 block font-mono-numbers text-sm font-medium text-ink">
+                <dt className="label-overline">Billed Service Cost</dt>
+                <dd className="mt-1 font-mono-numbers text-base font-medium text-ink">
                   ₹{record.cost.toLocaleString('en-IN')}
-                </span>
-                <span className="mt-0.5 block text-[10px] text-faint">
-                  Included in monthly comprehensive billing
-                </span>
+                </dd>
+                <dd className="mt-0.5 text-xs text-faint">Included in monthly comprehensive billing</dd>
               </div>
-            </div>
-          </div>
+            </dl>
+          </section>
         </div>
       </div>
     </div>

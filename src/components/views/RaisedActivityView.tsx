@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useEcho } from '../../context/EchoContext';
 import { BackToHome } from '../common/BackToHome';
-import { Plus, AlertCircle } from 'lucide-react';
+import { Plus, AlertCircle, AlertTriangle, Briefcase, CheckCircle2, Flag } from 'lucide-react';
 import { ActivityRow } from '../ui/ActivityRow';
 import { Status } from '../ui/Status';
-import { AlertTriangle, Briefcase, CheckCircle2, Flag, User } from 'lucide-react';
 
 const statusIcon = (status: string) => {
   const s = status.toLowerCase();
@@ -40,36 +39,36 @@ export const RaisedActivityView: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+    <div className="mx-auto w-full max-w-[1180px] px-5 py-10 sm:px-8 sm:py-16">
       <BackToHome />
 
-      {/* Header */}
-      <div className="flex flex-col justify-between gap-4 border-b border-line pb-8 sm:flex-row sm:items-end">
+      {/* Page Header */}
+      <div className="flex flex-col justify-between gap-5 border-b border-line pb-10 sm:flex-row sm:items-end">
         <div>
           <span className="section-kicker">Client Problem Tracking &amp; Tickets</span>
-          <h1 className="h-serif mt-1">Raised Activity</h1>
-          <p className="mt-1 text-sm text-tint">
+          <h1 className="h-display mt-1">Raised Activity</h1>
+          <p className="mt-3 max-w-xl text-[15px] text-tint">
             Log issues, monitor resolution timelines, and verify operational closeout.
           </p>
         </div>
 
-        <button
-          onClick={() => setCurrentView('raise-new-activity')}
-          className="btn-accent shrink-0"
-        >
+        <button onClick={() => setCurrentView('raise-new-activity')} className="btn-accent shrink-0">
           <Plus className="h-4 w-4" strokeWidth={2} />
-          <span>+ Raise New Activity</span>
+          <span>Raise New Activity</span>
         </button>
       </div>
 
-      {/* Track Activity by Code Section */}
-      <div className="my-8 rounded-2xl border border-line bg-tray p-6">
-        <h3 className="label-eyebrow">Track an Activity</h3>
-        <p className="mb-4 mt-1 text-xs leading-relaxed text-tint">
+      {/* Track Activity by Code */}
+      <section className="border-b border-line py-10">
+        <h2 className="label-eyebrow">Track an Activity</h2>
+        <p className="mt-1 text-xs text-tint">
           Quickly inspect live status and field progress using your unique ticket identifier.
         </p>
 
-        <form onSubmit={handleTrackSubmit} className="flex max-w-lg flex-col items-stretch gap-2 sm:flex-row sm:items-center">
+        <form
+          onSubmit={handleTrackSubmit}
+          className="mt-5 flex max-w-lg flex-col items-stretch gap-2 sm:flex-row sm:items-center"
+        >
           <div className="relative flex-1">
             <input
               type="text"
@@ -93,19 +92,19 @@ export const RaisedActivityView: React.FC = () => {
             <span>{trackError}</span>
           </div>
         )}
-      </div>
+      </section>
 
-      {/* Activity Index */}
-      <div className="flex items-start justify-between gap-4 pb-2">
-        <span className="label-overline">Activity Log</span>
+      {/* Activity Log */}
+      <div className="mt-10 flex items-start justify-between gap-4 pb-3">
+        <span className="label-eyebrow">Activity Log</span>
         <span className="font-mono-numbers text-xs text-faint">
           {activities.length} {activities.length === 1 ? 'ticket' : 'tickets'}
         </span>
       </div>
 
-      <div className="divide-y divide-line rounded-2xl border border-line bg-raise">
+      <div className="divide-y divide-line border-b border-line">
         {activities.length === 0 ? (
-          <div className="p-12 text-center text-xs font-semibold uppercase tracking-[0.18em] text-faint">
+          <div className="py-14 text-center text-xs font-semibold uppercase tracking-[0.18em] text-faint">
             No new activities have been raised.
           </div>
         ) : (

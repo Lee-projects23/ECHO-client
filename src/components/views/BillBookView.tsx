@@ -27,14 +27,14 @@ export const BillBookView: React.FC = () => {
   ];
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+    <div className="mx-auto w-full max-w-[1180px] px-5 py-10 sm:px-8 sm:py-16">
       <BackToHome />
 
       {/* Header */}
       <div className="flex flex-col justify-between gap-4 border-b border-line pb-8 sm:flex-row sm:items-end">
         <div>
           <span className="section-kicker">Financial Ledger &amp; Contract Records</span>
-          <h1 className="h-serif mt-1">Bill Book</h1>
+          <h1 className="h-display mt-1">Bill Book</h1>
           <p className="mt-1 text-sm text-tint">
             Quotations, issued invoices, vendor bills, and settlement vouchers.
           </p>
@@ -250,7 +250,7 @@ export const BillBookView: React.FC = () => {
             <div className="flex items-center justify-between border-b border-line pb-4">
               <div>
                 <span className="label-overline">Formal Quotation Review</span>
-                <h3 className="mt-1 font-serif text-2xl text-ink">{selectedQuotationModal.quotationNumber}</h3>
+                <h3 className="mt-1 text-2xl font-medium tracking-[-0.02em] text-ink">{selectedQuotationModal.quotationNumber}</h3>
               </div>
               <span className="shrink-0"><Status status={selectedQuotationModal.status} /></span>
             </div>

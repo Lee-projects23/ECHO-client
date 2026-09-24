@@ -12,14 +12,14 @@ interface DocumentRowProps {
 export const DocumentRow: React.FC<DocumentRowProps> = ({ name, meta, status, onDownload, className = '' }) => {
   return (
     <div
-      className={`group flex items-center gap-3.5 rounded-xl px-3 py-3 transition-colors hover:bg-tray anim-fade ${className}`}
+      className={`group flex items-center gap-4 py-4 transition-colors hover:bg-tray/60 anim-fade ${className}`}
     >
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
-        <FileText className="h-4.5 w-4.5" strokeWidth={1.75} />
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line text-tint transition-colors group-hover:border-accent/30 group-hover:text-accent">
+        <FileText className="h-4 w-4" strokeWidth={1.75} />
       </div>
       <div className="min-w-0 flex-1">
-        <div className="truncate text-sm font-medium text-ink">{name}</div>
-        <div className="truncate text-[11px] text-faint">{meta}</div>
+        <div className="truncate text-[15px] font-medium tracking-[-0.01em] text-ink">{name}</div>
+        <div className="truncate text-xs text-faint">{meta}</div>
       </div>
       {status && <div className="shrink-0">{status}</div>}
       <button

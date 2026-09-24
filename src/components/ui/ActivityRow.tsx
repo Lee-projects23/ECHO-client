@@ -27,7 +27,7 @@ export const ActivityRow: React.FC<ActivityRowProps> = ({
   return (
     <div
       onClick={onClick}
-      className={`group flex w-full cursor-pointer items-center gap-3.5 rounded-xl px-3 py-3 text-left transition-colors hover:bg-tray ${className}`}
+      className={`group flex w-full cursor-pointer items-center gap-4 py-4 text-left transition-colors hover:bg-tray/60 ${className}`}
     >
       <div
         className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line text-tint transition-colors group-hover:border-accent/30 group-hover:text-accent ${
@@ -37,8 +37,8 @@ export const ActivityRow: React.FC<ActivityRowProps> = ({
         <Icon className="h-4 w-4" strokeWidth={1.75} />
       </div>
       <div className="min-w-0 flex-1">
-        <div className="truncate text-sm font-medium text-ink">{title}</div>
-        <div className="truncate text-[11px] text-faint">{detail}</div>
+        <div className="truncate text-[15px] font-medium tracking-[-0.01em] text-ink">{title}</div>
+        <div className="truncate text-xs text-faint">{detail}</div>
       </div>
       {status && <div className="shrink-0">{status}</div>}
       <div className="shrink-0 text-right">
