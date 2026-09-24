@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useEcho } from '../../context/EchoContext';
 import { BackToHome } from '../common/BackToHome';
+import { img } from '../../lib/assets';
 import { Camera, Upload, Trash2, Mic, Square, Play, RefreshCw, CheckCircle, ArrowRight } from 'lucide-react';
 
 export const RaiseNewActivityView: React.FC = () => {
@@ -14,7 +15,7 @@ export const RaiseNewActivityView: React.FC = () => {
 
   // Photos state
   const [photos, setPhotos] = useState<string[]>([
-    '/src/assets/images/evidence_before_irrigation_1790239168316.jpg',
+    img('evidence_before_irrigation_1790239168316.jpg'),
   ]);
 
   // Voice note mock recorder state
@@ -63,7 +64,7 @@ export const RaiseNewActivityView: React.FC = () => {
     if (photos.length < 4) {
       setPhotos(prev => [
         ...prev,
-        '/src/assets/images/evidence_before_pump_1790239200201.jpg',
+        img('evidence_before_pump_1790239200201.jpg'),
       ]);
     }
   };

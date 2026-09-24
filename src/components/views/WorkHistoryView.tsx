@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useEcho } from '../../context/EchoContext';
 import { BackToHome } from '../common/BackToHome';
+import { img } from '../../lib/assets';
 import { ArrowRight, Download } from 'lucide-react';
 import { MaintenanceRow } from '../ui/MaintenanceRow';
 import { Status } from '../ui/Status';
@@ -19,7 +20,7 @@ export const WorkHistoryView: React.FC = () => {
       title: 'Restored East Pergola & Turf Edging',
       site: 'ECR Residential Site',
       date: '24 Sep 2026',
-      url: '/src/assets/images/evidence_after_irrigation_1790239183925.jpg',
+      url: img('evidence_after_irrigation_1790239183925.jpg'),
       category: 'Estate Horticulture',
     },
     {
@@ -27,7 +28,7 @@ export const WorkHistoryView: React.FC = () => {
       title: 'Calibrated Hydraulic Booster Manifold',
       site: 'OMR Office Campus',
       date: '22 Sep 2026',
-      url: '/src/assets/images/evidence_after_pump_1790239217036.jpg',
+      url: img('evidence_after_pump_1790239217036.jpg'),
       category: 'Electro-Mechanical',
     },
     {
@@ -35,7 +36,7 @@ export const WorkHistoryView: React.FC = () => {
       title: 'Commercial Plaza Manicured Ficus Hedge',
       site: 'Anna Nagar Commercial Hub',
       date: '20 Sep 2026',
-      url: '/src/assets/images/evidence_after_irrigation_1790239183925.jpg',
+      url: img('evidence_after_irrigation_1790239183925.jpg'),
       category: 'Topiary & Grounds',
     },
   ];

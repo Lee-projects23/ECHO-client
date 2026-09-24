@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useEcho } from '../../context/EchoContext';
 import { BackToHome } from '../common/BackToHome';
+import { img } from '../../lib/assets';
 import { Send, Mic, Lock, FileText, Image as ImageIcon } from 'lucide-react';
 import { ChatGroup } from '../../types/echo';
 
@@ -29,7 +30,7 @@ export const GroupChatView: React.FC = () => {
       sendChatMessage(activeGroup.groupId, 'Attached field photo for review:', {
         type: 'image',
         name: 'site_valve_photo.jpg',
-        url: '/src/assets/images/evidence_after_irrigation_1790239183925.jpg',
+        url: img('evidence_after_irrigation_1790239183925.jpg'),
       });
     } else if (type === 'document') {
       sendChatMessage(activeGroup.groupId, 'Attached maintenance signoff document:', {

@@ -11,6 +11,7 @@ import {
   DocumentItem,
   NotificationItem,
 } from '../types/echo';
+import { img } from '../lib/assets';
 
 export const initialClientProfile: ClientProfile = {
   client_id: 'CL-8829',
@@ -20,7 +21,7 @@ export const initialClientProfile: ClientProfile = {
   phone: '+91 98401 23456',
   gstin: '33AABCA8921F1ZX',
   gstAddress: '42/B, Old Mahabalipuram Road, Navalur, Chennai, Tamil Nadu 600130',
-  avatarUrl: '/src/assets/images/client_avatar_1790239151401.jpg',
+  avatarUrl: img('client_avatar_1790239151401.jpg'),
   registeredSites: [
     {
       site_id: 'site-ecr',
@@ -61,8 +62,8 @@ export const initialMaintenanceRecords: MaintenanceRecord[] = [
     time: '11:30 AM',
     status: 'In Progress',
     cost: 4500,
-    beforePhoto: '/src/assets/images/evidence_before_irrigation_1790239168316.jpg',
-    afterPhoto: '/src/assets/images/evidence_after_irrigation_1790239183925.jpg',
+    beforePhoto: img('evidence_before_irrigation_1790239168316.jpg'),
+    afterPhoto: img('evidence_after_irrigation_1790239183925.jpg'),
     notes: 'Sub-surface manifold pressure stabilized at 2.8 bar. Hunter rotary nozzles installed on perimeter zone. Soil probe confirms optimal moisture saturation.',
   },
   {
@@ -79,8 +80,8 @@ export const initialMaintenanceRecords: MaintenanceRecord[] = [
     time: '02:15 PM',
     status: 'Completed',
     cost: 12800,
-    beforePhoto: '/src/assets/images/evidence_before_pump_1790239200201.jpg',
-    afterPhoto: '/src/assets/images/evidence_after_pump_1790239217036.jpg',
+    beforePhoto: img('evidence_before_pump_1790239200201.jpg'),
+    afterPhoto: img('evidence_after_pump_1790239217036.jpg'),
     notes: 'Vibration dampeners replaced. Pump A & B balanced to 4.2 bar output. Admin verification completed and signed off.',
   },
   {
@@ -97,8 +98,8 @@ export const initialMaintenanceRecords: MaintenanceRecord[] = [
     time: '09:00 AM',
     status: 'Completed',
     cost: 8500,
-    beforePhoto: '/src/assets/images/evidence_before_irrigation_1790239168316.jpg',
-    afterPhoto: '/src/assets/images/evidence_after_irrigation_1790239183925.jpg',
+    beforePhoto: img('evidence_before_irrigation_1790239168316.jpg'),
+    afterPhoto: img('evidence_after_irrigation_1790239183925.jpg'),
     notes: 'Courtyard topiary manicured. Eco-friendly organic nutrient blend applied. Debris cleared before commercial trading hours.',
   },
   {
@@ -133,7 +134,7 @@ export const initialRaisedActivities: RaisedActivity[] = [
     time: '10:15 AM',
     status: 'Work In Progress',
     assignedEmployee: 'Arjun Sharma',
-    photos: ['/src/assets/images/evidence_before_irrigation_1790239168316.jpg'],
+    photos: [img('evidence_before_irrigation_1790239168316.jpg')],
     voiceNote: {
       duration: '0:42',
       recordedAt: '10:18 AM',
@@ -178,7 +179,7 @@ export const initialRaisedActivities: RaisedActivity[] = [
     time: '08:45 AM',
     status: 'Resolved',
     assignedEmployee: 'Karthik Raman',
-    photos: ['/src/assets/images/evidence_before_pump_1790239200201.jpg'],
+    photos: [img('evidence_before_pump_1790239200201.jpg')],
     timeline: [
       {
         timestamp: '22 Sep — 08:45 AM',
@@ -237,7 +238,7 @@ export const initialRaisedActivities: RaisedActivity[] = [
     time: '06:10 PM',
     status: 'Closed',
     assignedEmployee: 'Karthik Raman',
-    photos: ['/src/assets/images/evidence_before_pump_1790239200201.jpg'],
+    photos: [img('evidence_before_pump_1790239200201.jpg')],
     timeline: [
       {
         timestamp: '18 Sep — 06:10 PM',
@@ -460,7 +461,7 @@ export const initialChatGroups: ChatGroup[] = [
         attachment: {
           type: 'image',
           name: 'site_diagnostic_coupler.jpg',
-          url: '/src/assets/images/evidence_before_irrigation_1790239168316.jpg',
+          url: img('evidence_before_irrigation_1790239168316.jpg'),
         },
       },
       {
@@ -473,7 +474,7 @@ export const initialChatGroups: ChatGroup[] = [
         attachment: {
           type: 'image',
           name: 'post_restoration_turf.jpg',
-          url: '/src/assets/images/evidence_after_irrigation_1790239183925.jpg',
+          url: img('evidence_after_irrigation_1790239183925.jpg'),
         },
       },
     ],

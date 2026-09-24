@@ -1,0 +1,1 @@
+export const img = (name: string) => `${import.meta.env.BASE_URL}src/assets/images/${name}`;
